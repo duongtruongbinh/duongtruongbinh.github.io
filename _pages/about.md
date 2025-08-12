@@ -1,19 +1,20 @@
 ---
 layout: about
-title: about
+title: About
 permalink: /
-subtitle: <a href='#'>Affiliations</a>. Address. Contacts. Motto. Etc.
+subtitle: <a href='https://www.hcmus.edu.vn/' target='_blank'>Final-year Computer Science Student</a>. VNU-HCM, University of Science. Ho Chi Minh City, VN.
 
 profile:
   align: right
   image: prof_pic.jpg
   image_circular: false # crops the image to make it circular
   more_info: >
-    <p>555 your office number</p>
-    <p>123 your address street</p>
-    <p>Your City, State 12345</p>
+    <p>VNU-HCM, University of Science</p>
+    <p>227 Nguyen Van Cu, District 5</p>
+    <p>Ho Chi Minh City, Vietnam</p>
+    <p>duongtruongbinh2003@gmail.com</p>
 
-selected_papers: true # includes a list of papers marked as "selected={true}"
+selected_papers: false # set to true to include a list of papers
 social: true # includes social icons at the bottom of the page
 
 announcements:
@@ -27,8 +28,12 @@ latest_posts:
   limit: 3 # leave blank to include all the blog posts
 ---
 
-Write your biography here. Tell the world about yourself. Link to your favorite [subreddit](http://reddit.com). You can put a picture in, too. The code is already in, just name your picture `prof_pic.jpg` and put it in the `img/` folder.
+Hello! I'm Truong-Binh Duong, a final-year Computer Science student at the VNU-HCM, University of Science, specializing in Data Science and Artificial Intelligence.
 
-Put your address / P.O. box / other info right below your picture. You can also disable any of these elements by editing `profile` property of the YAML header of your `_pages/about.md`. Edit `_bibliography/papers.bib` and Jekyll will render your [publications page](/al-folio/publications/) automatically.
+I have a strong passion for leveraging data and AI to solve real-world problems. Through my advanced integrated Bachelor's-Master's program, I have built a solid foundation in machine learning theory, deep learning architectures, and the end-to-end data science lifecycle.
 
-Link to your social media connections, too. This theme is set up to use [Font Awesome icons](https://fontawesome.com/) and [Academicons](https://jpswalsh.github.io/academicons/), like the ones below. Add your Facebook, Twitter, LinkedIn, Google Scholar, or just disable all of them.
+I thrive on turning theory into practice. My project work has allowed me to dive deep into areas like computer vision, natural language processing, and predictive modeling. I have hands-on experience developing complete solutions—from data scraping and model training with frameworks like PyTorch, to deploying them with tools like FastAPI and Google Cloud's Vertex AI.
+
+I am actively seeking full-time opportunities where I can contribute my skills to a challenging and data-driven environment, and continue to grow as a Data Scientist or AI Engineer.
+
+Feel free to connect with me through the social channels below!

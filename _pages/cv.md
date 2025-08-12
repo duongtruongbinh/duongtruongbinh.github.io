@@ -1,11 +1,11 @@
 ---
 layout: cv
 permalink: /cv/
-title: cv
+title: CV
 nav: true
 nav_order: 5
-cv_pdf: example_pdf.pdf # you can also use external links here
-description: This is a description of the page. You can modify it in '_pages/cv.md'. You can also change or remove the top pdf download button.
+cv_pdf: # Add your CV PDF file here later: cv_truong_binh_duong.pdf
+description: Curriculum Vitae of Truong-Binh Duong - Computer Science Student specializing in Data Science and AI.
 toc:
   sidebar: left
 ---
