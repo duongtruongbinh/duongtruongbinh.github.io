@@ -1,4 +1,4 @@
 User-agent: *
 Disallow:
 
-Sitemap: https://duongtruongbinh.github.io/personal-website/sitemap.xml
+Sitemap: https://duongtruongbinh.github.io/sitemap.xml
