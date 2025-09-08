@@ -1,9 +1,11 @@
 github_users:
   - duongtruongbinh
 
-repo_description_lines_max: 2
+repo_description_lines_max: 3
 
 github_repos:
+  - duongtruongbinh/ViVQA-X
   - duongtruongbinh/hackhcmc-AIO_CGLG2.0
   - duongtruongbinh/Math-Solving-Assistant
   - duongtruongbinh/IntroDS_FinalProject
+  - Linvyl/DAM-QA

@@ -7,7 +7,7 @@ first_name: Truong-Binh
 middle_name:
 last_name: Duong
 contact_note: >
-  I'm always open to discussing new projects, creative ideas, or opportunities to collaborate. 
+  I'm always open to discussing research opportunities, internship positions, or collaborations in AI and Data Science. 
   Feel free to connect with me via email or LinkedIn.
 description: > # The ">" symbol means to ignore newlines until "footer_text:"
   The personal portfolio of Truong-Binh Duong, a final-year Computer Science student specializing in Data Science and Artificial Intelligence. 
@@ -56,7 +56,7 @@ posts_in_search: true
 bib_search: true
 
 # Dimensions
-max_width: 930px
+max_width: 1000px
 
 # TODO: add layout settings (single page vs. multi-page)
 
@@ -96,10 +96,16 @@ lsi: false # produce an index for related posts
 # Pagination
 pagination:
   enabled: true
+  per_page: 8
+  permalink: "/page/:num/"
+  title: ":title - Page :num"
+  limit: 0
+  sort_field: "date"
+  sort_reverse: true
 
 related_blog_posts:
   enabled: true
-  max_related: 5
+  max_related: 3
 
 # Giscus comments (RECOMMENDED)
 # Follow instructions on https://giscus.app/ to setup for your repo to fill out the information below.
@@ -146,13 +152,13 @@ newsletter:
 
 collections:
   books:
-    output: true
+    output: false
   news:
     defaults:
       layout: post
     output: true
   projects:
-    output: true
+    output: false
 
 # -----------------------------------------------------------------------------
 # Jekyll settings
@@ -189,6 +195,10 @@ exclude:
   - package.json
   - package-lock.json
   - _pages/about_einstein.md
+  - _pages/books.md
+  - _pages/dropdown.md
+  - _pages/teaching.md
+  - _pages/projects.md
   - purgecss.config.js
   - README.md
   - readme_preview/
@@ -385,9 +395,9 @@ enable_google_verification: false # enables google site verification
 enable_bing_verification: false # enables bing site verification
 enable_masonry: true # enables automatic project cards arrangement
 enable_math: true # enables math typesetting (uses MathJax)
-enable_tooltips: false # enables automatic tooltip links generated for each section titles on pages and posts
+enable_tooltips: true # enables automatic tooltip links generated for each section titles on pages and posts
 enable_darkmode: true # enables switching between light/dark modes
-enable_navbar_social: false # enables displaying social links in the navbar on the about page
+enable_navbar_social: true # enables displaying social links in the navbar on the about page
 enable_project_categories: true # enables categorization of projects into multiple categories
 enable_medium_zoom: true # enables image zoom feature (as on medium.com)
 enable_progressbar: true # enables a horizontal progress bar linked to the vertical scroll position

@@ -3,8 +3,12 @@
   contents:
     - name: Full Name
       value: Truong-Binh Duong
-    - name: Year of Birth
-      value: 2003 # Please feel free to add the full date
+    - name: Phone
+      value: +(84) 936212865
+    - name: Email
+      value: duongtruongbinh2003@gmail.com
+    - name: Location
+      value: Ho Chi Minh City, Vietnam
     - name: Languages
       value: Vietnamese (Native), English (Professional Working Proficiency)
 
@@ -17,7 +21,7 @@
       description:
         - Specialization in Data Science, enrolled in the advanced Integrated Bachelor's-Master's Program.
         - This program involves taking graduate-level courses as an undergraduate student.
-        - GPA: 3.81/4.0
+        - GPA: 3.98/4.0
         - title: Honors
           contents:
             - Dean's List Honoree for 5 consecutive semesters.
@@ -25,16 +29,16 @@
 - title: Experience
   type: time_table
   contents:
-    - title: Research Assistant
+    - title: Teaching Assistant
       institution: AI VIETNAM
       year: Aug 2024 - Present
       description:
-        - Researched and implemented advanced AI models for tasks in natural language processing and computer vision.
-        - Contributed to the development lifecycle of research projects, including data preprocessing, model evaluation, and results analysis.
+        - Developed curriculum and teaching materials (slides, tutorials, code) for the AIO program, covering fundamental Machine Learning, Deep Learning, and advanced topics such as AI Agents and LLM Reasoning.
+        - Designed and authored exam questions to assess student proficiency in Linear Algebra, Probability, Statistics, Machine Learning, and Deep Learning.
         - title: Key Contributions
           contents:
-            - Collaborated with senior researchers to analyze experimental results and prepare findings for presentation.
-            - Gained experience in [mention a specific framework or tool you used, e.g., Hugging Face, W&B].
+            - Created comprehensive educational content for AI/ML courses
+            - "Teaching materials available at: https://drive.google.com/drive/folders/1JTLMNDsnOKD4Yo1e2x3CZVMUXkbP8KD2?usp=sharing"
 
 - title: Projects
   type: time_table
@@ -57,8 +61,7 @@
         - Dean's List Honoree (5 Semesters) - VNU-HCM, University of Science
     - year: # Add year for new certs
       items:
-        - # [Add name of certification or award here]
-
+        -  # [Add name of certification or award here]
 
 - title: Skills
   type: nested_list
