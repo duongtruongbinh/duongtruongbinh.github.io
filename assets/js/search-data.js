@@ -383,18 +383,7 @@ ninja.data = [{
           description: "",
           section: "Books",handler: () => {
               window.location.href = "/books/the_godfather/";
-            },},{id: "news-a-simple-inline-announcement",
-          title: 'A simple inline announcement.',
-          description: "",
-          section: "News",},{id: "news-a-long-announcement-with-details",
-          title: 'A long announcement with details',
-          description: "",
-          section: "News",handler: () => {
-              window.location.href = "/news/announcement_2/";
-            },},{id: "news-a-simple-inline-announcement-with-markdown-emoji-sparkles-smile",
-          title: 'A simple inline announcement with Markdown emoji! :sparkles: :smile:',
-          description: "",
-          section: "News",},{id: "news-honored-to-achieve-dean-s-list-recognition-for-the-5th-consecutive-semester-at-vnu-hcmus-maintaining-a-gpa-of-3-98-4-0-while-pursuing-research-and-practical-projects-grateful-for-this-milestone",
+            },},{id: "news-honored-to-achieve-dean-s-list-recognition-for-the-5th-consecutive-semester-at-vnu-hcmus-maintaining-a-gpa-of-3-98-4-0-while-pursuing-research-and-practical-projects-grateful-for-this-milestone",
           title: 'Honored to achieve Dean’s List recognition for the 5th consecutive semester at VNU-HCMUS!...',
           description: "",
           section: "News",},{id: "news-i-m-thrilled-to-start-my-role-as-a-teaching-assistant-at-ai-vietnam-i-ll-be-developing-curriculum-and-teaching-materials-for-the-aio-program-covering-fundamental-ml-deep-learning-and-advanced-topics-like-ai-agents-and-llm-reasoning",
