@@ -12,6 +12,16 @@ interface Props {
 }
 
 const { links, className = "" } = Astro.props;
+
+function getIconName(label: string): string {
+  const normalized = label.toLowerCase();
+  if (normalized.startsWith("arxiv")) return "Arxiv";
+  if (normalized.startsWith("code")) return "Github";
+  if (normalized.startsWith("paper") || normalized.startsWith("pdf")) {
+    return "FileText";
+  }
+  return "ExternalLink";
+}
 ---
 
 {links.length > 0 && (
@@ -23,7 +33,7 @@ const { links, className = "" } = Astro.props;
         rel="noopener noreferrer"
         class="resource-link"
       >
-        <Icon name="ExternalLink" size={12} />
+        <Icon name={getIconName(link.label)} size={12} />
         <span>{link.label}</span>
       </a>
     ))}

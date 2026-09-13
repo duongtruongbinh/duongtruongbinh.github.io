@@ -11,8 +11,8 @@ export interface NewsItem {
 
 export const NEWS: NewsItem[] = [
   {
-    date: "Aug 2026",
-    datetime: "2026-08",
+    date: "Sep 2026",
+    datetime: "2026-09",
     segments: [
       { text: "Started my M.Sc. in Telecommunications at " },
       { text: "INRS", href: "https://inrs.ca/" },
@@ -26,10 +26,8 @@ export const NEWS: NewsItem[] = [
     datetime: "2026-05",
     segments: [
       {
-        text: "Our paper “Counterfactual Reasoning for Robust Visual Question Answering” was accepted at ",
+        text: "Our paper “Counterfactual Reasoning for Robust Visual Question Answering” was accepted at KES 2026. Code is available ",
       },
-      { text: "KES 2026", href: "https://kes2026.kesinternational.org/" },
-      { text: ". Code is available " },
       {
         text: "here",
         href: "https://github.com/duongtruongbinh/robust-vqa-counterfactual",
@@ -46,12 +44,9 @@ export const NEWS: NewsItem[] = [
         text: "ViInfographicVQA",
         href: "https://arxiv.org/abs/2512.12424",
       },
-      { text: "” was presented at the " },
       {
-        text: "AAAI 2026 Workshop on AI for Scientific Research",
-        href: "https://ai4research-workshop.github.io/",
+        text: "” was presented at the AAAI 2026 Workshop on AI for Scientific Research.",
       },
-      { text: "." },
     ],
   },
   {

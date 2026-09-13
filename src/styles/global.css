@@ -319,8 +319,16 @@ a:hover {
   margin-bottom: 0;
 }
 
-.prose a {
-  font-weight: 600;
+.prose a,
+.news-content a {
+  color: var(--accent);
+  font-weight: inherit;
+  text-decoration: none;
+}
+
+.prose a:hover,
+.news-content a:hover {
+  text-decoration: underline;
 }
 
 .research-interests {
