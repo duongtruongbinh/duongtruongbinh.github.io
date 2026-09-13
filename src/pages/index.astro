@@ -1,31 +1,39 @@
 ---
 import { getEntry, render } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { PAGES } from "../config";
+import NewsList from "../components/home/NewsList.astro";
 
-// Load bio content
 const bioEntry = await getEntry("bio", "bio");
-const { Content: BioContent } = bioEntry
-	? await render(bioEntry)
-	: { Content: null };
+if (!bioEntry) {
+  throw new Error(
+    "Bio content not found. Please ensure src/content/bio.md exists.",
+  );
+}
+
+const { Content: BioContent } = await render(bioEntry);
 ---
 
-<BaseLayout title={PAGES.home.title}>
-	<div class="container-narrow">
-		{
-			(PAGES.home.title || PAGES.home.subtitle) && (
-				<header class="page-header">
-					{PAGES.home.title && (
-						<h1 class="page-title">{PAGES.home.title}</h1>
-					)}
-					{PAGES.home.subtitle && (
-						<p class="page-subtitle">{PAGES.home.subtitle}</p>
-					)}
-				</header>
-			)
-		}
-		<div class="prose">
-			{BioContent ? <BioContent /> : <p>Loading bio...</p>}
-		</div>
-	</div>
+<BaseLayout title="About">
+  <div class="container-narrow">
+    <header class="page-header">
+      <h1 class="page-title">About</h1>
+    </header>
+
+    <section class="page-section prose" aria-label="About Truong-Binh Duong">
+      <BioContent />
+    </section>
+
+    <NewsList />
+
+    <section class="page-section" aria-labelledby="research-interests-heading">
+      <h2 id="research-interests-heading" class="section-title">
+        Research Interests
+      </h2>
+      <ul class="research-interests">
+        {bioEntry.data.researchInterests.map((interest) => (
+          <li>{interest}</li>
+        ))}
+      </ul>
+    </section>
+  </div>
 </BaseLayout>

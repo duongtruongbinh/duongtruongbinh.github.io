@@ -1,34 +1,47 @@
 # AGENTS.md
 
+This is a focused academic profile, not a generic CMS/blog. Prefer simple page-specific components over speculative generic abstractions.
+
 ## Commands
 
 - `npm run dev` - Start dev server
 - `npm run build` - Production build
 - `npm run preview` - Preview build
+- `npm run format` - Format files with Prettier
+- `npm run format:check` - Check formatting
+- `npm run check` - Run Astro and TypeScript diagnostics
+- `npm run verify` - Run formatting, checks, and production build
 
 ## Requirements
 
-- Node.js >= 22.12.0
+- Node.js 24 LTS or newer
+
+## Public Routes
+
+- `/` - About, News, and Research Interests
+- `/publications` - Year-grouped academic publication list
+- `/cv` - Education and Research & Teaching Experience
+
+Do not add public Blog, Tags, Projects, Talks, Teaching, News archive, RSS, or publication-detail routes unless explicitly requested.
 
 ## Architecture
 
-- **Barrel files:** `src/config/index.ts`, `src/types/index.ts`
-- **Content:** `src/content/` - Add `.md` files to subdirectories (posts/, publications/, projects/, talks/, teaching/)
-- **Config:** `src/config/` - site.ts (SITE, THEME_CONFIG, SETTINGS, ANALYTICS), pages.ts (PAGES), navigation.ts (NAV_LINKS), social.ts (SOCIALS), themes.ts
-- **Types:** `src/types/` - content.ts (Bio, CVItem, etc.), display.ts (ListingItem, DetailItem), config.ts, themes.ts
-- **Styles:** `src/styles/global.css` - Theme colors, base styles
-- **Assets:** `src/assets/icons.ts` - Icon definitions
+- **Layout:** `src/layouts/BaseLayout.astro` with the two-column sidebar/main structure
+- **Page-specific components:** `src/components/home/NewsList.astro`, `src/components/publications/PublicationItem.astro`
+- **Shared components:** layout components, `ContentLinks.astro`, `Icon.astro`, and `Timeline.astro`
+- **Content:** `src/content/bio.md`, `src/content/cv.md`, and frontmatter-only files in `src/content/publications/`
+- **Data:** `src/data/news.ts`
+- **Config:** `src/config/` for site, navigation, social, theme, and analytics settings
+- **Styles:** `src/styles/global.css` for theme tokens and shared/page-specific styles
 
-## Key Constraints
+## Constraints
 
-- **No `<style>` in `.astro` files** - Use global.css and Tailwind classes in components
-- **Two-column layout:** Left sidebar (sticky profile), Right main (scrollable content)
-- **Markdown-driven:** All content in `.md` files with YAML frontmatter
-- **Theme config:** Use `THEME_CONFIG` for theme settings (lightAndDark, themeLight, themeDark)
-
-## Notes
-
-- Tailwind CSS v4 uses `@tailwindcss/vite` plugin (no tailwind.config.js)
-- LaTeX math rendering via remark-math/rehype-katex
-- Analytics supported via GA4 (`ga4Id`) and Umami (`umami.websiteId`) — configure in `src/config/site.ts`
-- No lint/typecheck scripts configured
+- Keep public navigation exactly About, Publications, CV unless requirements change.
+- Keep News on the homepage; do not create news detail/archive pages.
+- Publication titles are plain text. External resources use compact labeled links.
+- Render publication authors structurally and bold exactly `Truong-Binh Duong`; do not inject raw HTML.
+- Do not invent DOI, volume, pages, dates, or publication status.
+- Do not add `<style>` blocks in `.astro` files; use `global.css` or Tailwind utilities.
+- Preserve the clean two-column academic layout, responsive behavior, SEO, accessibility, and light/dark themes.
+- Theme colors in `src/styles/global.css` are the single source of truth.
+- Tailwind CSS 4 uses `@tailwindcss/vite` without `tailwind.config.js`.

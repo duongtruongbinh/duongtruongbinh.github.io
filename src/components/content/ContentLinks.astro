@@ -1,30 +1,31 @@
 ---
-import type { DisplayLink } from "../../types";
+import Icon from "../ui/Icon.astro";
+
+interface ResourceLink {
+  label: string;
+  href: string;
+}
 
 interface Props {
-    links: DisplayLink[];
-    className?: string;
+  links: ResourceLink[];
+  className?: string;
 }
 
 const { links, className = "" } = Astro.props;
 ---
 
-{
-    links.length > 0 && (
-        <div class={`item-links horizontal container-narrow ${className}`}>
-            {links.map((link) => (
-                <a
-                    href={link.href}
-                    target={link.external !== false ? "_blank" : undefined}
-                    rel={
-                        link.external !== false
-                            ? "noopener noreferrer"
-                            : undefined
-                    }
-                >
-                    {link.label} &rarr;
-                </a>
-            ))}
-        </div>
-    )
-}
+{links.length > 0 && (
+  <div class={`item-links ${className}`}>
+    {links.map((link) => (
+      <a
+        href={link.href}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="resource-link"
+      >
+        <Icon name="ExternalLink" size={12} />
+        <span>{link.label}</span>
+      </a>
+    ))}
+  </div>
+)}

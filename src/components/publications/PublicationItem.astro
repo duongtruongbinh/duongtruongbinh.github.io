@@ -1,0 +1,29 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { SITE } from "../../config";
+import ContentLinks from "../content/ContentLinks.astro";
+
+interface Props {
+  publication: CollectionEntry<"publications">["data"];
+}
+
+const { publication } = Astro.props;
+---
+
+<article class="publication-item">
+  <h3 class="publication-title">{publication.title}</h3>
+  <p class="publication-authors">
+    {publication.authors.map((author, index) => (
+      <>
+        {index > 0 && ", "}
+        {author === SITE.author ? <strong>{author}</strong> : author}
+      </>
+    ))}
+  </p>
+  {publication.venue && <p class="publication-venue">{publication.venue}</p>}
+  {publication.publication && (
+    <p class="publication-publication">{publication.publication}</p>
+  )}
+  {publication.status && <p class="publication-status">{publication.status}</p>}
+  {publication.links && <ContentLinks links={publication.links} />}
+</article>

@@ -1,0 +1,37 @@
+---
+import { NEWS } from "../../data/news";
+import Icon from "../ui/Icon.astro";
+---
+
+<section class="page-section" aria-labelledby="news-heading">
+  <h2 id="news-heading" class="section-title news-heading">
+    <Icon name="News" size={18} class="news-icon" />
+    News
+  </h2>
+  <div class="news-list">
+    {NEWS.map((item) => (
+      <article class="news-item">
+        <time class="news-date" datetime={item.datetime}>
+          {item.date}
+        </time>
+        <div class="news-content">
+          <p>
+            {item.segments.map((segment) =>
+              segment.href ? (
+                <a
+                  href={segment.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {segment.text}
+                </a>
+              ) : (
+                segment.text
+              ),
+            )}
+          </p>
+        </div>
+      </article>
+    ))}
+  </div>
+</section>

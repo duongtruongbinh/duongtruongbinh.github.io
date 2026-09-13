@@ -1,56 +1,22 @@
 import { defineCollection } from "astro:content";
 import { glob } from "astro/loaders";
-import { z } from "zod";
-import { PAGES } from "./config/pages";
+import { z } from "astro/zod";
+
+const link = z.object({
+  label: z.string(),
+  href: z.string(),
+});
 
 const publications = defineCollection({
   loader: glob({ pattern: "**/*.md", base: "./src/content/publications" }),
   schema: z.object({
     title: z.string(),
-    author: z.string().optional(),
-    date: z.string().optional(),
-    journal: z.string().optional(),
-    external_url: z.string().optional(),
-    image: z.string().optional(),
-    description: z.string().optional(),
-    tags: z.array(z.string()).optional(),
-  }),
-});
-
-const talks = defineCollection({
-  loader: glob({ pattern: "**/*.md", base: "./src/content/talks" }),
-  schema: z.object({
-    title: z.string(),
-    date: z.string().optional(),
-    event: z.string().optional(),
-    external_url: z.string().optional(),
-    description: z.string().optional(),
-    tags: z.array(z.string()).optional(),
-    image: z.string().optional(),
-  }),
-});
-
-const posts = defineCollection({
-  loader: glob({ pattern: "**/*.md", base: "./src/content/posts" }),
-  schema: z.object({
-    title: z.string(),
-    date: z.string().optional(),
-    description: z.string().optional(),
-    author: z.string().optional(),
-    tags: z.array(z.string()).optional(),
-    external_url: z.string().optional(),
-    image: z.string().optional(),
-  }),
-});
-
-const teaching = defineCollection({
-  loader: glob({ pattern: "**/*.md", base: "./src/content/teaching" }),
-  schema: z.object({
-    title: z.string(),
-    institution: z.string().optional(),
-    description: z.string().optional(),
-    tags: z.array(z.string()).optional(),
-    external_url: z.string().url().optional(),
+    authors: z.array(z.string()),
+    year: z.number(),
+    venue: z.string().optional(),
+    publication: z.string().optional(),
+    status: z.string().optional(),
+    links: z.array(link).optional(),
   }),
 });
 
@@ -61,17 +27,7 @@ const bio = defineCollection({
     avatar: z.string(),
     shortBio: z.string().optional(),
     institution: z.string().optional(),
-  }),
-});
-
-const projects = defineCollection({
-  loader: glob({ pattern: "**/*.md", base: "./src/content/projects" }),
-  schema: z.object({
-    title: z.string(),
-    description: z.string().optional(),
-    tags: z.array(z.string()).optional(),
-    external_url: z.string().optional(),
-    image: z.string().optional(),
+    researchInterests: z.array(z.string()),
   }),
 });
 
@@ -104,12 +60,4 @@ const cv = defineCollection({
   }),
 });
 
-export const collections = {
-  publications: publications,
-  bio: bio,
-  projects: projects,
-  cv: cv,
-  ...(PAGES.blog.isActive !== false ? { posts: posts } : {}),
-  ...(PAGES.talks.isActive !== false ? { talks: talks } : {}),
-  ...(PAGES.teaching.isActive !== false ? { teaching: teaching } : {}),
-};
+export const collections = { publications, bio, cv };

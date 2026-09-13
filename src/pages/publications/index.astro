@@ -1,14 +1,46 @@
 ---
-import BaseListing from "../../layouts/BaseListing.astro";
-import { PAGES } from "../../config";
+import { getCollection } from "astro:content";
+import PublicationItem from "../../components/publications/PublicationItem.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
 
-if (PAGES.publications.isActive === false) {
-    return Astro.redirect("/404");
-}
+const publications = (await getCollection("publications")).sort(
+  (a, b) =>
+    b.data.year - a.data.year || a.data.title.localeCompare(b.data.title),
+);
+const years = [...new Set(publications.map(({ data }) => data.year))];
 ---
 
-<BaseListing
-    collection="publications"
-    title={PAGES.publications.title}
-    subtitle={PAGES.publications.subtitle}
-/>
+<BaseLayout
+  title="Publications"
+  description="Peer-reviewed publications and preprints in multimodal learning, visual reasoning, and robust AI."
+>
+  <div class="container-narrow">
+    <header class="page-header">
+      <h1 class="page-title">Publications</h1>
+      <p class="page-subtitle">
+        Peer-reviewed publications and preprints in multimodal learning, visual
+        reasoning, and robust AI.
+      </p>
+    </header>
+
+    <div class="publication-groups">
+      {years.map((year) => (
+        <section
+          class="publication-year-group"
+          aria-labelledby={`year-${year}`}
+        >
+          <h2 id={`year-${year}`} class="publication-year">
+            {year}
+          </h2>
+          <div class="publication-list">
+            {publications
+              .filter(({ data }) => data.year === year)
+              .map(({ data }) => (
+                <PublicationItem publication={data} />
+              ))}
+          </div>
+        </section>
+      ))}
+    </div>
+  </div>
+</BaseLayout>
