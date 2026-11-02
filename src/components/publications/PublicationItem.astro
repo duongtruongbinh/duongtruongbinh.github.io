@@ -8,6 +8,9 @@ interface Props {
 }
 
 const { publication } = Astro.props;
+const venue = [publication.venue, publication.publication]
+  .filter(Boolean)
+  .join(" · ");
 ---
 
 <article class="publication-item">
@@ -20,10 +23,7 @@ const { publication } = Astro.props;
       </>
     ))}
   </p>
-  {publication.venue && <p class="publication-venue">{publication.venue}</p>}
-  {publication.publication && (
-    <p class="publication-publication">{publication.publication}</p>
-  )}
+  {venue && <p class="publication-venue">{venue}</p>}
   {publication.status && <p class="publication-status">{publication.status}</p>}
   {publication.links && <ContentLinks links={publication.links} />}
 </article>

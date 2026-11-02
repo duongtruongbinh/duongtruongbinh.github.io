@@ -15,6 +15,7 @@ const currentPath = Astro.url.pathname;
         <li>
           <a
             href={link.href}
+            data-astro-reload={link.href.endsWith(".pdf") ? "" : undefined}
             aria-current={isCurrent ? "page" : undefined}
             class={`nav-link ${isCurrent ? "active" : "inactive"}`}
           >

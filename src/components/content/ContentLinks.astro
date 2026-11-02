@@ -8,10 +8,9 @@ interface ResourceLink {
 
 interface Props {
   links: ResourceLink[];
-  className?: string;
 }
 
-const { links, className = "" } = Astro.props;
+const { links } = Astro.props;
 
 function getIconName(label: string): string {
   const normalized = label.toLowerCase();
@@ -25,7 +24,7 @@ function getIconName(label: string): string {
 ---
 
 {links.length > 0 && (
-  <div class={`item-links ${className}`}>
+  <div class="item-links">
     {links.map((link) => (
       <a
         href={link.href}
@@ -33,7 +32,7 @@ function getIconName(label: string): string {
         rel="noopener noreferrer"
         class="resource-link"
       >
-        <Icon name={getIconName(link.label)} size={12} />
+        <Icon name={getIconName(link.label)} size={16} />
         <span>{link.label}</span>
       </a>
     ))}

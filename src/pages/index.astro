@@ -2,6 +2,7 @@
 import { getEntry, render } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import NewsList from "../components/home/NewsList.astro";
+import ResearchLoop from "../components/home/ResearchLoop.astro";
 
 const bioEntry = await getEntry("bio", "bio");
 if (!bioEntry) {
@@ -13,7 +14,7 @@ if (!bioEntry) {
 const { Content: BioContent } = await render(bioEntry);
 ---
 
-<BaseLayout title="About">
+<BaseLayout title="Home">
   <div class="container-narrow">
     <header class="page-header">
       <h1 class="page-title">About</h1>
@@ -21,6 +22,7 @@ const { Content: BioContent } = await render(bioEntry);
 
     <section class="page-section prose" aria-label="About Truong-Binh Duong">
       <BioContent />
+      <ResearchLoop />
     </section>
 
     <NewsList />
@@ -29,9 +31,15 @@ const { Content: BioContent } = await render(bioEntry);
       <h2 id="research-interests-heading" class="section-title">
         Research Interests
       </h2>
-      <ul class="research-interests">
+      <ul class="research-interests" role="list">
         {bioEntry.data.researchInterests.map((interest) => (
-          <li>{interest}</li>
+          <li>
+            <div>
+              <h3>{interest.title}</h3>
+              <p class="research-context">{interest.context}</p>
+            </div>
+            <p>{interest.description}</p>
+          </li>
         ))}
       </ul>
     </section>

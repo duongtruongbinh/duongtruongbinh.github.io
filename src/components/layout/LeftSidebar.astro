@@ -5,9 +5,15 @@ import Icon from "../ui/Icon.astro";
 
 const bioCollection = await getCollection("bio");
 const bio = bioCollection[0]?.data;
+const email = SOCIALS.find((social) => social.name === "Mail");
+const academicLinks = SOCIALS.filter((social) => social.name !== "Mail");
 ---
 
-<aside class="sidebar" aria-label="Profile">
+<aside
+  class="sidebar"
+  aria-label="Profile"
+  transition:persist="profile-sidebar"
+>
   <div class="profile">
     {bio?.avatar && (
       <img
@@ -24,15 +30,40 @@ const bio = bioCollection[0]?.data;
       {bio?.name && <div class="sidebar-name">{bio.name}</div>}
       {bio?.institution && (
         <p class="sidebar-info">
-          <Icon name="Institution" size={16} />
-          <span>
-            {bio.role} · {bio.institution}
-          </span>
+          <span>{bio.role} ·</span>
+          <a
+            class="institution-link"
+            href="https://inrs.ca/"
+            aria-label="Institut national de la recherche scientifique (INRS)"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <img
+              class="institution-logo institution-logo-light"
+              src="/inrs-logo.png"
+              alt=""
+              width={75}
+              height={108}
+            />
+            <img
+              class="institution-logo institution-logo-dark"
+              src="/inrs-logo-white.png"
+              alt=""
+              width={75}
+              height={108}
+            />
+          </a>
         </p>
       )}
       {bio?.shortBio && <p class="sidebar-bio">{bio.shortBio}</p>}
+      {email && (
+        <a class="profile-email" href={email.href}>
+          <Icon name="Mail" size={16} />
+          <span>{email.href.replace("mailto:", "")}</span>
+        </a>
+      )}
       <div class="profile-socials">
-        {SOCIALS.map((social) => (
+        {academicLinks.map((social) => (
           <a
             href={social.href}
             aria-label={social.linkTitle}
@@ -41,7 +72,8 @@ const bio = bioCollection[0]?.data;
             rel="noreferrer"
             class="social-link"
           >
-            <Icon name={SOCIAL_ICONS[social.name] || social.name} size={24} />
+            <Icon name={SOCIAL_ICONS[social.name] || social.name} size={16} />
+            <span>{social.name}</span>
           </a>
         ))}
       </div>

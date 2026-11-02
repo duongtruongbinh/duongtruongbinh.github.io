@@ -20,5 +20,3 @@ export const ICONS: Record<string, string> = Object.keys(rawIcons).reduce(
   },
   {} as Record<string, string>,
 );
-
-export type IconName = keyof typeof ICONS;

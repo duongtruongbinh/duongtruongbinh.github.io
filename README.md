@@ -30,7 +30,7 @@ This is a focused academic profile, not a generic CMS/blog. Prefer simple page-s
 
 ## Content
 
-- `src/content/bio.md` — homepage biography and research interests
+- `src/content/bio.md` — homepage biography and research interests, each with a title, description, and research context
 - `src/data/news.ts` — compact homepage news entries, newest first
 - `src/content/publications/` — frontmatter-only publication records
 - `public/CV.pdf` — published curriculum vitae
@@ -73,6 +73,16 @@ themes does not request another image or add a tracking hit.
 The optimized portrait is cropped from `public/profile.jpg`; keep the original
 when replacing the portrait. `public/og-image.png` is the dedicated social sharing
 image (1200 × 630).
+
+The local INRS logos (`public/inrs-logo.png` and `public/inrs-logo-white.png`)
+come from the [official horizontal web logo package](https://inrs.ca/wp-content/uploads/2020/09/INRS-Logo-pour-le-web-horizontal.zip).
+Only the INRS lettermark is cropped from the original lockup; its proportions and
+colors are preserved, with the white version used in dark mode.
+See the [INRS visual identity guidance](https://inrs.ca/linrs/directions-et-services/service-des-communications/logo-et-identite-visuelle/).
+
+Astro's built-in client router keeps the profile sidebar in place during internal
+navigation. Theme controls and the visitor map initialize after page changes;
+the CV PDF uses ordinary browser navigation.
 
 If a running dev server reports missing content after a collection schema change,
 restart it to reload the schema (`nvm use`, then `npm run dev`). The repository

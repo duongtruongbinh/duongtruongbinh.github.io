@@ -28,7 +28,13 @@ const bio = defineCollection({
     role: z.string(),
     shortBio: z.string().optional(),
     institution: z.string().optional(),
-    researchInterests: z.array(z.string()),
+    researchInterests: z.array(
+      z.object({
+        title: z.string(),
+        description: z.string(),
+        context: z.string(),
+      }),
+    ),
   }),
 });
 

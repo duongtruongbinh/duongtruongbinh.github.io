@@ -18,12 +18,9 @@ const years = [...new Set(publications.map(({ data }) => data.year))];
     <header class="page-header">
       <h1 class="page-title">Publications</h1>
       <p class="page-subtitle">
-        Peer-reviewed publications and preprints in multimodal learning, visual
-        reasoning, and robust AI.
+        Research in multimodal learning, visual reasoning, and robust AI.
       </p>
     </header>
-
-    <p class="contribution-note">* Equal contribution.</p>
 
     <div class="publication-groups">
       {years.map((year) => (
@@ -44,5 +41,7 @@ const years = [...new Set(publications.map(({ data }) => data.year))];
         </section>
       ))}
     </div>
+
+    <p class="contribution-note">* Equal contribution.</p>
   </div>
 </BaseLayout>

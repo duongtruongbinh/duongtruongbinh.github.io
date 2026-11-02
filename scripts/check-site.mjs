@@ -5,12 +5,30 @@ import { runInNewContext } from "node:vm";
 
 const pages = ["index.html", "publications/index.html"];
 
+test("profile contact is readable and the retained research content is rendered", async () => {
+  for (const page of pages) {
+    const html = await readFile(`dist/${page}`, "utf8");
+    assert.match(html, /href="mailto:duongtruongbinh2003@gmail.com"/);
+    assert.match(html, />duongtruongbinh2003@gmail.com<\/span>/);
+    for (const label of ["GitHub", "Google Scholar", "ORCID", "LinkedIn"]) {
+      assert.ok(html.includes(`<span>${label}</span>`));
+    }
+  }
+  const home = await readFile("dist/index.html", "utf8");
+  assert.match(home, /<figure[^>]*aria-labelledby="research-loop-caption"/);
+  assert.equal([...home.matchAll(/class="diagram-stage"/g)].length, 3);
+  assert.match(home, /<h3>World Models<\/h3>/);
+  assert.match(home, /<h3>Vision-Language-Action<\/h3>/);
+  assert.match(home, /<h3>Robust Multimodal Reasoning<\/h3>/);
+  assert.doesNotMatch(home, /\[object Object\]/);
+});
+
 test("readers can skip navigation and see the editorial update date", async () => {
   for (const page of pages) {
     const html = await readFile(`dist/${page}`, "utf8");
     assert.match(html, /href="#main-content"/);
     assert.match(html, /<main\b[^>]*id="main-content"/);
-    assert.match(html, /Last updated:[\s\S]*?<time datetime="2026-11-01"/);
+    assert.match(html, /Last updated:[\s\S]*?<time datetime="2026-11-06"/);
   }
 });
 

@@ -36,7 +36,7 @@ Do not add public Blog, Tags, Projects, Talks, Teaching, News archive, RSS, or p
 
 ## Constraints
 
-- Keep public navigation exactly About, Publications, CV unless requirements change.
+- Keep public navigation exactly Home, Publications, CV unless requirements change.
 - CV opens `public/CV.pdf` at `/CV.pdf` as a static file, without forcing a download.
 - Keep News on the homepage; do not create news detail/archive pages.
 - Publication titles are plain text. External resources use compact labeled links.

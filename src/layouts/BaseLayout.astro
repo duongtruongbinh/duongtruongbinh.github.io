@@ -1,5 +1,6 @@
 ---
 import { SITE, ANALYTICS, SOCIALS } from "../config";
+import { ClientRouter } from "astro:transitions";
 import LeftSidebar from "../components/layout/LeftSidebar.astro";
 import RightMain from "../components/layout/RightMain.astro";
 import "@fontsource-variable/inter";
@@ -53,10 +54,11 @@ const jsonLd = {
 ---
 
 <!doctype html>
-<html lang={SITE.lang}>
+<html lang={SITE.lang} transition:animate="none">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <ClientRouter fallback="swap" />
     <link rel="icon" type="image/svg+xml" href={SITE.favicon} />
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <meta name="generator" content={Astro.generator} />
@@ -185,6 +187,7 @@ const jsonLd = {
       };
 
       applyPreferredTheme();
+      document.addEventListener("astro:after-swap", applyPreferredTheme);
 
       systemTheme.addEventListener("change", (event) => {
         if (!getStoredTheme()) {
@@ -192,18 +195,21 @@ const jsonLd = {
         }
       });
 
-      window.addEventListener("DOMContentLoaded", () => {
+      const setupToggle = () => {
         updateToggle(document.documentElement.getAttribute("data-theme"));
         const toggle = document.getElementById("theme-toggle");
-        toggle?.addEventListener("click", () => {
-          const current = document.documentElement.getAttribute("data-theme");
-          const next = current === "dark" ? "light" : "dark";
-          try {
-            localStorage.setItem(themeStorageKey, next);
-          } catch {}
-          applyTheme(next);
-        });
-      });
+        if (toggle)
+          toggle.onclick = () => {
+            const current = document.documentElement.getAttribute("data-theme");
+            const next = current === "dark" ? "light" : "dark";
+            try {
+              localStorage.setItem(themeStorageKey, next);
+            } catch {}
+            applyTheme(next);
+          };
+      };
+      window.addEventListener("DOMContentLoaded", setupToggle);
+      document.addEventListener("astro:page-load", setupToggle);
     </script>
   </head>
   <body class="bg-background text-foreground transition-colors duration-300 min-h-screen">

@@ -11,7 +11,7 @@ export const SITE: SiteConfig = {
   desc: "Truong-Binh Duong is an M.Sc. student at INRS working on world models, vision-language-action models, embodied AI, robot learning, and robust multimodal learning.",
   title: "Truong-Binh Duong | M.Sc. Student at INRS",
   ogImage: "/og-image.png",
-  lastUpdated: "2026-11-01",
+  lastUpdated: "2026-11-06",
   favicon: "/favicon.svg",
   lang: "en",
 };
