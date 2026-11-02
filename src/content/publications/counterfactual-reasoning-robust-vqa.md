@@ -6,7 +6,7 @@ authors:
   - "Ngoc-Thao Nguyen"
   - "Bac Le"
 year: 2026
-venue: "30th International Conference on Knowledge-Based and Intelligent Information & Engineering Systems (KES 2026)"
+venue: "Knowledge-Based and Intelligent Information & Engineering Systems (KES 2026)"
 publication: "Procedia Computer Science, Elsevier"
 status: "Accepted · Proceedings forthcoming"
 links:

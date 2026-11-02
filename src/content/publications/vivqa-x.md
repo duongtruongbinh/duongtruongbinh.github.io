@@ -11,6 +11,6 @@ publication: "Springer LNNS, vol. 1596 (2026)"
 links:
   - label: "Paper"
     href: "https://doi.org/10.1007/978-981-95-1746-6_18"
-  - label: "Code / Dataset"
+  - label: "Code"
     href: "https://github.com/duongtruongbinh/ViVQA-X"
 ---

@@ -25,6 +25,7 @@ const bio = defineCollection({
   schema: z.object({
     name: z.string(),
     avatar: z.string(),
+    role: z.string(),
     shortBio: z.string().optional(),
     institution: z.string().optional(),
     researchInterests: z.array(z.string()),
@@ -36,13 +37,14 @@ const cv = defineCollection({
   schema: z.object({
     name: z.string(),
     title: z.string(),
+    lastUpdated: z.iso.date(),
     experience: z
       .array(
         z.object({
           role: z.string(),
           institution: z.string(),
           period: z.string(),
-          description: z.string(),
+          highlights: z.array(z.string()),
         }),
       )
       .optional(),

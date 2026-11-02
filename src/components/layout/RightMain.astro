@@ -1,12 +1,14 @@
 ---
 import Navbar from "./Navbar.astro";
 import Footer from "./Footer.astro";
+import VisitorMap from "./VisitorMap.astro";
 ---
 
 <div class="main-content">
   <Navbar />
-  <div class="main-body">
+  <main id="main-content" class="main-body" tabindex="-1">
     <slot />
-  </div>
+    <VisitorMap />
+  </main>
   <Footer />
 </div>

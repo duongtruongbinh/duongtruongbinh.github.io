@@ -23,6 +23,8 @@ const years = [...new Set(publications.map(({ data }) => data.year))];
       </p>
     </header>
 
+    <p class="contribution-note">* Equal contribution.</p>
+
     <div class="publication-groups">
       {years.map((year) => (
         <section

@@ -10,6 +10,6 @@ venue: "AAAI Workshop on AI for Scientific Research 2026"
 links:
   - label: "Paper"
     href: "https://arxiv.org/abs/2512.12424"
-  - label: "Code / Benchmark"
+  - label: "Code"
     href: "https://github.com/duongtruongbinh/ViInfographicVQA"
 ---

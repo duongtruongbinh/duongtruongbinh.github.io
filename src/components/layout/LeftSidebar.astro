@@ -2,38 +2,36 @@
 import { SOCIALS, SOCIAL_ICONS } from "../../config";
 import { getCollection } from "astro:content";
 import Icon from "../ui/Icon.astro";
-import { Image } from "astro:assets";
 
 const bioCollection = await getCollection("bio");
 const bio = bioCollection[0]?.data;
 ---
 
-<aside class="sidebar max-lg:flex-row max-lg:flex-wrap max-lg:gap-3 max-md:gap-2">
-  <div class="flex flex-col items-center text-center max-lg:flex-row max-lg:text-left max-lg:gap-3 max-lg:items-center max-md:gap-2">
+<aside class="sidebar" aria-label="Profile">
+  <div class="profile">
     {bio?.avatar && (
-      <Image
+      <img
         src={`/${bio.avatar}`}
-        alt={`Avatar of ${bio.name}`}
+        alt={`${bio.name} presenting research at ICISN 2025`}
         width={160}
         height={160}
-        densities={[1.5, 2]}
-        format="webp"
         class="sidebar-avatar"
         loading="eager"
+        fetchpriority="high"
       />
     )}
-    <div class="flex flex-col items-center max-lg:items-start">
+    <div class="profile-details">
       {bio?.name && <div class="sidebar-name">{bio.name}</div>}
       {bio?.institution && (
         <p class="sidebar-info">
           <Icon name="Institution" size={16} />
-          {bio.institution}
+          <span>
+            {bio.role} · {bio.institution}
+          </span>
         </p>
       )}
-      {bio?.shortBio && (
-        <p class="sidebar-bio mt-2 max-md:hidden">{bio.shortBio}</p>
-      )}
-      <div class="flex gap-1 flex-wrap items-center justify-center max-lg:justify-start mt-3">
+      {bio?.shortBio && <p class="sidebar-bio">{bio.shortBio}</p>}
+      <div class="profile-socials">
         {SOCIALS.map((social) => (
           <a
             href={social.href}

@@ -3,12 +3,21 @@ import { SITE, THEME_CONFIG } from "../../config";
 import Icon from "../ui/Icon.astro";
 
 const currentYear = new Date().getFullYear();
+const updatedDate = new Intl.DateTimeFormat("en-GB", {
+  day: "numeric",
+  month: "short",
+  year: "numeric",
+  timeZone: "UTC",
+}).format(new Date(`${SITE.lastUpdated}T12:00:00Z`));
 ---
 
 <footer class="footer">
   <div class="footer-copy">
     <span class="body-xs">
       &copy; {currentYear} {SITE.author}.
+    </span>
+    <span class="body-xs">
+      Last updated: <time datetime={SITE.lastUpdated}>{updatedDate}</time>
     </span>
   </div>
   {THEME_CONFIG.lightAndDark && (

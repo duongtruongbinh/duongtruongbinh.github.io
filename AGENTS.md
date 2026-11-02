@@ -20,7 +20,7 @@ This is a focused academic profile, not a generic CMS/blog. Prefer simple page-s
 
 - `/` - About, News, and Research Interests
 - `/publications` - Year-grouped academic publication list
-- `/cv` - Education and Research & Teaching Experience
+- `/cv` - Redirects to the PDF; the CV navigation link opens the PDF directly
 
 Do not add public Blog, Tags, Projects, Talks, Teaching, News archive, RSS, or publication-detail routes unless explicitly requested.
 
@@ -28,7 +28,7 @@ Do not add public Blog, Tags, Projects, Talks, Teaching, News archive, RSS, or p
 
 - **Layout:** `src/layouts/BaseLayout.astro` with the two-column sidebar/main structure
 - **Page-specific components:** `src/components/home/NewsList.astro`, `src/components/publications/PublicationItem.astro`
-- **Shared components:** layout components, `ContentLinks.astro`, `Icon.astro`, and `Timeline.astro`
+- **Shared components:** layout components, `ContentLinks.astro`, and `Icon.astro`
 - **Content:** `src/content/bio.md`, `src/content/cv.md`, and frontmatter-only files in `src/content/publications/`
 - **Data:** `src/data/news.ts`
 - **Config:** `src/config/` for site, navigation, social, theme, and analytics settings
@@ -37,6 +37,7 @@ Do not add public Blog, Tags, Projects, Talks, Teaching, News archive, RSS, or p
 ## Constraints
 
 - Keep public navigation exactly About, Publications, CV unless requirements change.
+- CV opens `public/CV.pdf` at `/CV.pdf` as a static file, without forcing a download.
 - Keep News on the homepage; do not create news detail/archive pages.
 - Publication titles are plain text. External resources use compact labeled links.
 - Render publication authors structurally and bold exactly `Truong-Binh Duong`; do not inject raw HTML.

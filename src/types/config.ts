@@ -4,6 +4,7 @@ export interface SiteConfig {
   desc: string;
   title: string;
   ogImage: string;
+  lastUpdated: string;
   favicon: string;
   lang: string;
 }

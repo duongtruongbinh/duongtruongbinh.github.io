@@ -1,0 +1,80 @@
+---
+import { SITE, VISITOR_MAP } from "../../config";
+
+const imageURL = new URL("https://mapmyvisitors.com/map.png");
+imageURL.search = new URLSearchParams({
+  d: VISITOR_MAP.widgetId,
+  w: "560",
+}).toString();
+---
+
+<section
+  class="visitor-section"
+  aria-label="Visitor locations"
+  data-visitor-map
+  data-production-host={new URL(SITE.website).hostname}
+  data-show-map={String(Astro.url.pathname === "/")}
+  hidden
+>
+  <a
+    class="visitor-map"
+    href={VISITOR_MAP.statsUrl}
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    <img
+      data-src={imageURL.href}
+      data-preview-src="/visitor-map-preview.png"
+      width="560"
+      height="297"
+      alt="World map showing approximate visitor locations. Open geographic visitor statistics."
+      decoding="async"
+      fetchpriority="low"
+    />
+  </a>
+</section>
+
+{Astro.url.pathname === "/" && (
+  <noscript>
+    <a class="visitor-section visitor-map" href={VISITOR_MAP.statsUrl}>
+      <img
+        src="/visitor-map-preview.png"
+        width="560"
+        height="297"
+        alt="Visitor map preview. Open live visitor statistics."
+      />
+    </a>
+  </noscript>
+)}
+
+<script is:inline>
+  const visitorMap = document.querySelector("[data-visitor-map]");
+  if (visitorMap) {
+    const image = visitorMap.querySelector("img");
+    image.addEventListener("error", () => {
+      image.hidden = true;
+    });
+    // Count production visits only; previews show a local snapshot instead.
+    if (window.location.hostname === visitorMap.dataset.productionHost) {
+      const url = new URL(image.dataset.src);
+      const colors = getComputedStyle(document.documentElement);
+      for (const [parameter, token] of Object.entries({
+        co: "--background",
+        cl: "--border",
+        ct: "--text-muted",
+        cmn: "--accent",
+        cmo: "--accent",
+      })) {
+        url.searchParams.set(
+          parameter,
+          colors.getPropertyValue(token).trim().replace("#", ""),
+        );
+      }
+      image.src = url.href;
+    } else {
+      image.src = image.dataset.previewSrc;
+      image.alt = "Visitor map preview. Open live visitor statistics.";
+    }
+    visitorMap.hidden = visitorMap.dataset.showMap !== "true";
+  }
+</script>

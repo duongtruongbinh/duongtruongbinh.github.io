@@ -1,22 +1,27 @@
 ---
 name: "Truong-Binh Duong"
 title: "M.Sc. Student in Telecommunications"
+lastUpdated: "2026-11-01"
 
 experience:
   - role: "Research and Teaching Assistant"
     institution: "AI VIETNAM"
     period: "Aug 2024 - Present"
-    description: "Conduct research on vision-language models and LLM reasoning, with a focus on automated data pipelines, benchmark construction, robust multimodal reasoning, and empirical model evaluation. Develop curricula, teaching materials, and examinations for artificial intelligence courses."
+    highlights:
+      - "Research vision-language models and LLM reasoning through automated data pipelines, benchmark construction, and empirical evaluation."
+      - "Develop curricula, teaching materials, and examinations covering mathematics, deep learning, and LLMs/VLMs for the AIO program."
 
   - role: "Undergraduate Researcher - Graduation Thesis"
     institution: "VNUHCM - University of Science"
     period: "Jan 2025 - Aug 2025"
-    description: "Developed a counterfactual training framework for robust visual question answering using contrastive and gradient-discrepancy regularization within a curriculum learning strategy."
+    highlights:
+      - "Developed a counterfactual VQA training framework combining contrastive learning and gradient-discrepancy regularization."
+      - "Graduation thesis resulted in a paper accepted at KES 2026."
 
 education:
   - degree: "M.Sc. in Telecommunications"
     institution: "Institut national de la recherche scientifique (INRS)"
-    period: "2026 - Present"
+    period: "Sep 2026 - Present"
     description: "Thesis-based master's program. Supervisor: Prof. Long Bao Le."
 
   - degree: "B.Sc. in Information Technology"
