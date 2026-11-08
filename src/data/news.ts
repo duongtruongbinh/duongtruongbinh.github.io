@@ -26,13 +26,10 @@ export const NEWS: NewsItem[] = [
     datetime: "2026-05",
     segments: [
       {
-        text: "Counterfactual Reasoning for Robust VQA accepted at KES 2026. ",
+        text: "Counterfactual Reasoning for Robust VQA",
+        href: "https://doi.org/10.1016/j.procs.2026.09.191",
       },
-      {
-        text: "Code",
-        href: "https://github.com/duongtruongbinh/robust-vqa-counterfactual",
-      },
-      { text: "." },
+      { text: " accepted at KES 2026." },
     ],
   },
   {

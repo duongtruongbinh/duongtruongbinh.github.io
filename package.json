@@ -14,7 +14,6 @@
     "format:check": "prettier . --check",
     "check": "astro check",
     "test": "node --test scripts/check-site.mjs",
-    "test:dev": "node --test scripts/check-dev.mjs",
     "verify": "npm run format:check && npm run check && npm run build && npm test"
   },
   "dependencies": {

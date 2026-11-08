@@ -212,11 +212,11 @@ const jsonLd = {
       document.addEventListener("astro:page-load", setupToggle);
     </script>
   </head>
-  <body class="bg-background text-foreground transition-colors duration-300 min-h-screen">
+  <body class="bg-background text-foreground min-h-screen">
     <a class="skip-link" href="#main-content">
       Skip to content
     </a>
-    <div class="flex max-lg:flex-col mx-auto max-w-6xl w-full min-h-screen">
+    <div class="flex max-lg:flex-col mx-auto max-w-[1184px] w-full min-h-screen">
       <LeftSidebar />
       <RightMain>
         <slot />

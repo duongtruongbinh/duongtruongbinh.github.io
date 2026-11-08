@@ -1,7 +1,7 @@
 ---
 name: "Truong-Binh Duong"
 title: "M.Sc. Student in Telecommunications"
-lastUpdated: "2026-11-01"
+lastUpdated: "2026-11-07"
 
 experience:
   - role: "Research and Teaching Assistant"
@@ -16,7 +16,7 @@ experience:
     period: "Jan 2025 - Aug 2025"
     highlights:
       - "Developed a counterfactual VQA training framework combining contrastive learning and gradient-discrepancy regularization."
-      - "Graduation thesis resulted in a paper accepted at KES 2026."
+      - "Graduation thesis resulted in a paper published in Procedia Computer Science (Elsevier), vol. 292, pp. 1162–1171, KES 2026."
 
 education:
   - degree: "M.Sc. in Telecommunications"

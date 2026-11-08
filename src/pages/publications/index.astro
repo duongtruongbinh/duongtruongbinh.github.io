@@ -18,11 +18,14 @@ const years = [...new Set(publications.map(({ data }) => data.year))];
     <header class="page-header">
       <h1 class="page-title">Publications</h1>
       <p class="page-subtitle">
-        Research in multimodal learning, visual reasoning, and robust AI.
+        * equal contribution · full list on{" "}
+        <a href="https://scholar.google.com/citations?user=GW6kjhEAAAAJ&hl=en">
+          Google Scholar
+        </a>
       </p>
     </header>
 
-    <div class="publication-groups">
+    <div>
       {years.map((year) => (
         <section
           class="publication-year-group"
@@ -41,7 +44,5 @@ const years = [...new Set(publications.map(({ data }) => data.year))];
         </section>
       ))}
     </div>
-
-    <p class="contribution-note">* Equal contribution.</p>
   </div>
 </BaseLayout>

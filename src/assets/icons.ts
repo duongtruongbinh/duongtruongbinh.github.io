@@ -11,12 +11,9 @@ function getSvgChildren(svg: string) {
     .trim();
 }
 
-export const ICONS: Record<string, string> = Object.keys(rawIcons).reduce(
-  (acc, filePath) => {
-    const fileName = filePath.replace("./icons/", "").replace(".svg", "");
-
-    acc[fileName] = getSvgChildren(rawIcons[filePath]);
-    return acc;
-  },
-  {} as Record<string, string>,
+export const ICONS: Record<string, string> = Object.fromEntries(
+  Object.entries(rawIcons).map(([filePath, svg]) => [
+    filePath.replace("./icons/", "").replace(".svg", ""),
+    getSvgChildren(svg),
+  ]),
 );

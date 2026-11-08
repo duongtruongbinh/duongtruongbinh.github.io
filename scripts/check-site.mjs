@@ -28,7 +28,7 @@ test("readers can skip navigation and see the editorial update date", async () =
     const html = await readFile(`dist/${page}`, "utf8");
     assert.match(html, /href="#main-content"/);
     assert.match(html, /<main\b[^>]*id="main-content"/);
-    assert.match(html, /Last updated:[\s\S]*?<time datetime="2026-11-06"/);
+    assert.match(html, /Last updated:[\s\S]*?<time datetime="2026-11-08"/);
   }
 });
 
@@ -53,8 +53,50 @@ test("CV navigation opens the original PDF without forcing a download", async ()
 
 test("publication contribution markers are explained", async () => {
   const html = await readFile("dist/publications/index.html", "utf8");
-  assert.match(html, /\* Equal contribution\./);
+  assert.match(
+    html,
+    /\* equal contribution · full list on <a\b[^>]*href="https:\/\/scholar\.google\.com\/citations\?user=GW6kjhEAAAAJ&hl=en"[^>]*>google scholar<\/a>/i,
+  );
   assert.doesNotMatch(html, /Code \/ (Dataset|Benchmark)/);
+});
+
+test("publication figures are local, accessible images without image links", async () => {
+  const html = await readFile("dist/publications/index.html", "utf8");
+  const articles = [
+    ...html.matchAll(
+      /<article class="publication-item">([\s\S]*?)<\/article>/g,
+    ),
+  ];
+  assert.equal(articles.length, 6);
+  for (const [, article] of articles) {
+    const figure = article.match(
+      /<div class="publication-figure">\s*<img\b([^>]+)>/,
+    );
+    assert.ok(figure, "each available paper must have a labeled figure");
+    assert.match(figure[1], /alt="[^"]+"/);
+    const imagePath = figure[1].match(/\ssrc="([^"]+)"/);
+    assert.ok(imagePath);
+    assert.ok(
+      imagePath[1].startsWith("/_astro/"),
+      "figures must be served locally",
+    );
+    assert.ok((await readFile(`dist${imagePath[1]}`)).length > 0);
+  }
+});
+
+test("publication venues show conference names and abbreviations without volume or pages", async () => {
+  const html = await readFile("dist/publications/index.html", "utf8");
+  const venues = [
+    ...html.matchAll(/<p class="publication-venue">([^<]+)<\/p>/g),
+  ].map((match) => match[1]);
+  assert.equal(venues.length, 6);
+  for (const venue of venues) {
+    assert.match(venue, /\([A-Z][^)]+20\d{2}\)/);
+    assert.doesNotMatch(
+      venue,
+      /\b(?:vol\.|pp\.|pages\b|Springer\b|Elsevier\b|Procedia\b)/i,
+    );
+  }
 });
 
 test("visitor map uses the owner's account without third-party JavaScript", async () => {
@@ -68,6 +110,8 @@ test("visitor map uses the owner's account without third-party JavaScript", asyn
     );
     assert.match(html, /https:\/\/mapmyvisitors.com\/web\/1c98s/);
     assert.match(html, /approximate visitor locations/);
+    assert.match(html, /<h2 id="visitors-heading"[^>]*>Visitors<\/h2>/);
+    assert.match(html, /map\.png[^"]*w=600/);
     assert.match(html, /data-production-host="duongtruongbinh.github.io"/);
     assert.ok(
       html.includes(`data-show-map="${page === "index.html"}"`),

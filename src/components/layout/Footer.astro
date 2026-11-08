@@ -1,6 +1,5 @@
 ---
-import { SITE, THEME_CONFIG } from "../../config";
-import Icon from "../ui/Icon.astro";
+import { SITE } from "../../config";
 
 const currentYear = new Date().getFullYear();
 const updatedDate = new Intl.DateTimeFormat("en-GB", {
@@ -20,18 +19,4 @@ const updatedDate = new Intl.DateTimeFormat("en-GB", {
       Last updated: <time datetime={SITE.lastUpdated}>{updatedDate}</time>
     </span>
   </div>
-  {THEME_CONFIG.lightAndDark && (
-    <div class="footer-actions">
-      <button
-        id="theme-toggle"
-        type="button"
-        aria-label="Switch to dark mode"
-        aria-pressed="false"
-        class="btn-icon"
-      >
-        <Icon name="Sun" size={16} class="hidden dark:block" />
-        <Icon name="Moon" size={16} class="block dark:hidden" />
-      </button>
-    </div>
-  )}
 </footer>

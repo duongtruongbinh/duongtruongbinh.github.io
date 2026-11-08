@@ -2,20 +2,24 @@
 import { SITE, VISITOR_MAP } from "../../config";
 
 const imageURL = new URL("https://mapmyvisitors.com/map.png");
+// Match the displayed width so the built-in pageview text stays legible.
 imageURL.search = new URLSearchParams({
   d: VISITOR_MAP.widgetId,
-  w: "560",
+  w: "600",
 }).toString();
 ---
 
 <section
   class="visitor-section"
-  aria-label="Visitor locations"
+  aria-labelledby="visitors-heading"
   data-visitor-map
   data-production-host={new URL(SITE.website).hostname}
   data-show-map={String(Astro.url.pathname === "/")}
   hidden
 >
+  <h2 id="visitors-heading" class="section-title">
+    Visitors
+  </h2>
   <a
     class="visitor-map"
     href={VISITOR_MAP.statsUrl}
@@ -25,8 +29,8 @@ imageURL.search = new URLSearchParams({
     <img
       data-src={imageURL.href}
       data-preview-src="/visitor-map-preview.png"
-      width="560"
-      height="297"
+      width="600"
+      height="317"
       alt="World map showing approximate visitor locations. Open geographic visitor statistics."
       decoding="async"
       fetchpriority="low"
@@ -36,14 +40,22 @@ imageURL.search = new URLSearchParams({
 
 {Astro.url.pathname === "/" && (
   <noscript>
-    <a class="visitor-section visitor-map" href={VISITOR_MAP.statsUrl}>
-      <img
-        src="/visitor-map-preview.png"
-        width="560"
-        height="297"
-        alt="Visitor map preview. Open live visitor statistics."
-      />
-    </a>
+    <section
+      class="visitor-section"
+      aria-labelledby="visitors-heading-noscript"
+    >
+      <h2 id="visitors-heading-noscript" class="section-title">
+        Visitors
+      </h2>
+      <a class="visitor-map" href={VISITOR_MAP.statsUrl}>
+        <img
+          src="/visitor-map-preview.png"
+          width="600"
+          height="317"
+          alt="Visitor map preview. Open live visitor statistics."
+        />
+      </a>
+    </section>
   </noscript>
 )}
 
@@ -61,8 +73,8 @@ imageURL.search = new URLSearchParams({
         const colors = getComputedStyle(document.documentElement);
         for (const [parameter, token] of Object.entries({
           co: "--background",
-          cl: "--border",
-          ct: "--text-muted",
+          cl: "--map-land",
+          ct: "--foreground",
           cmn: "--accent",
           cmo: "--accent",
         })) {

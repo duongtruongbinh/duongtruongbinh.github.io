@@ -1,5 +1,6 @@
 ---
 import type { CollectionEntry } from "astro:content";
+import { Image } from "astro:assets";
 import { SITE } from "../../config";
 import ContentLinks from "../content/ContentLinks.astro";
 
@@ -8,22 +9,35 @@ interface Props {
 }
 
 const { publication } = Astro.props;
-const venue = [publication.venue, publication.publication]
-  .filter(Boolean)
-  .join(" · ");
 ---
 
 <article class="publication-item">
-  <h3 class="publication-title">{publication.title}</h3>
-  <p class="publication-authors">
-    {publication.authors.map((author, index) => (
-      <>
-        {index > 0 && ", "}
-        {author === SITE.author ? <strong>{author}</strong> : author}
-      </>
-    ))}
-  </p>
-  {venue && <p class="publication-venue">{venue}</p>}
-  {publication.status && <p class="publication-status">{publication.status}</p>}
-  {publication.links && <ContentLinks links={publication.links} />}
+  {publication.image && (
+    <div class="publication-figure">
+      <Image
+        src={publication.image.src}
+        alt={publication.image.alt}
+        width={480}
+        widths={[240, 480, 960]}
+        sizes="(max-width: 640px) calc(100vw - 2.5rem), 216px"
+        loading="lazy"
+      />
+    </div>
+  )}
+  <div class="publication-details">
+    <h3 class="publication-title">{publication.title}</h3>
+    <p class="publication-authors">
+      {publication.authors.map((author, index) => (
+        <>
+          {index > 0 && ", "}
+          {author === SITE.author ? <strong>{author}</strong> : author}
+        </>
+      ))}
+    </p>
+    {publication.venue && <p class="publication-venue">{publication.venue}</p>}
+    {publication.status && (
+      <p class="publication-status">{publication.status}</p>
+    )}
+    {publication.links && <ContentLinks links={publication.links} />}
+  </div>
 </article>

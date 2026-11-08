@@ -9,15 +9,21 @@ const link = z.object({
 
 const publications = defineCollection({
   loader: glob({ pattern: "**/*.md", base: "./src/content/publications" }),
-  schema: z.object({
-    title: z.string(),
-    authors: z.array(z.string()),
-    year: z.number(),
-    venue: z.string().optional(),
-    publication: z.string().optional(),
-    status: z.string().optional(),
-    links: z.array(link).optional(),
-  }),
+  schema: ({ image }) =>
+    z.object({
+      title: z.string(),
+      authors: z.array(z.string()),
+      year: z.number(),
+      venue: z.string().optional(),
+      image: z
+        .object({
+          src: image(),
+          alt: z.string(),
+        })
+        .optional(),
+      status: z.string().optional(),
+      links: z.array(link).optional(),
+    }),
 });
 
 const bio = defineCollection({
