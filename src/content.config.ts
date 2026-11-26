@@ -13,7 +13,7 @@ const publications = defineCollection({
     z.object({
       title: z.string(),
       authors: z.array(z.string()),
-      year: z.number(),
+      date: z.string().regex(/^\d{4}-\d{2}(-\d{2})?$/),
       venue: z.string().optional(),
       image: z
         .object({
@@ -23,6 +23,7 @@ const publications = defineCollection({
         .optional(),
       status: z.string().optional(),
       links: z.array(link).optional(),
+      bibtex: z.string().optional(),
     }),
 });
 
@@ -34,44 +35,16 @@ const bio = defineCollection({
     role: z.string(),
     shortBio: z.string().optional(),
     institution: z.string().optional(),
-    researchInterests: z.array(
-      z.object({
-        title: z.string(),
-        description: z.string(),
-        context: z.string(),
-      }),
-    ),
+    researchInterests: z
+      .array(
+        z.object({
+          stage: z.string(),
+          title: z.string(),
+          description: z.string(),
+        }),
+      )
+      .length(3),
   }),
 });
 
-const cv = defineCollection({
-  loader: glob({ pattern: "cv.md", base: "./src/content" }),
-  schema: z.object({
-    name: z.string(),
-    title: z.string(),
-    lastUpdated: z.iso.date(),
-    experience: z
-      .array(
-        z.object({
-          role: z.string(),
-          institution: z.string(),
-          period: z.string(),
-          highlights: z.array(z.string()),
-        }),
-      )
-      .optional(),
-    education: z
-      .array(
-        z.object({
-          degree: z.string(),
-          institution: z.string(),
-          period: z.string(),
-          thesis: z.string().optional(),
-          description: z.string().optional(),
-        }),
-      )
-      .optional(),
-  }),
-});
-
-export const collections = { publications, bio, cv };
+export const collections = { publications, bio };

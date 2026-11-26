@@ -22,26 +22,15 @@ const { Content: BioContent } = await render(bioEntry);
 
     <section class="page-section prose" aria-label="About Truong-Binh Duong">
       <BioContent />
-      <ResearchLoop />
     </section>
-
-    <NewsList />
 
     <section class="page-section" aria-labelledby="research-interests-heading">
       <h2 id="research-interests-heading" class="section-title">
         Research Interests
       </h2>
-      <ul class="research-interests" role="list">
-        {bioEntry.data.researchInterests.map((interest) => (
-          <li>
-            <div>
-              <h3>{interest.title}</h3>
-              <p class="research-context">{interest.context}</p>
-            </div>
-            <p>{interest.description}</p>
-          </li>
-        ))}
-      </ul>
+      <ResearchLoop interests={bioEntry.data.researchInterests} />
     </section>
+
+    <NewsList />
   </div>
 </BaseLayout>

@@ -7,6 +7,8 @@ imageURL.search = new URLSearchParams({
   d: VISITOR_MAP.widgetId,
   w: "600",
 }).toString();
+
+const isHome = Astro.url.pathname === "/";
 ---
 
 <section
@@ -14,7 +16,7 @@ imageURL.search = new URLSearchParams({
   aria-labelledby="visitors-heading"
   data-visitor-map
   data-production-host={new URL(SITE.website).hostname}
-  data-show-map={String(Astro.url.pathname === "/")}
+  data-show-map={String(isHome)}
   hidden
 >
   <h2 id="visitors-heading" class="section-title">
@@ -38,7 +40,7 @@ imageURL.search = new URLSearchParams({
   </a>
 </section>
 
-{Astro.url.pathname === "/" && (
+{isHome && (
   <noscript>
     <section
       class="visitor-section"
@@ -59,7 +61,7 @@ imageURL.search = new URLSearchParams({
   </noscript>
 )}
 
-<script is:inline data-astro-rerun>
+<script is:inline>
   {
     const visitorMap = document.querySelector("[data-visitor-map]");
     if (visitorMap) {
@@ -69,21 +71,33 @@ imageURL.search = new URLSearchParams({
       });
       // Count production visits only; previews show a local snapshot instead.
       if (window.location.hostname === visitorMap.dataset.productionHost) {
-        const url = new URL(image.dataset.src);
-        const colors = getComputedStyle(document.documentElement);
-        for (const [parameter, token] of Object.entries({
-          co: "--background",
-          cl: "--map-land",
-          ct: "--foreground",
-          cmn: "--accent",
-          cmo: "--accent",
-        })) {
-          url.searchParams.set(
-            parameter,
-            colors.getPropertyValue(token).trim().replace("#", ""),
-          );
-        }
-        image.src = url.href;
+        // Every new colour set is another counter request, so each theme's
+        // image is built once and reused when the theme is toggled back.
+        const sources = {};
+        const showThemedMap = () => {
+          const root = document.documentElement;
+          const theme = root.getAttribute("data-theme") || "light";
+          if (!sources[theme]) {
+            const url = new URL(image.dataset.src);
+            const colors = getComputedStyle(root);
+            for (const [parameter, token] of Object.entries({
+              co: "--background",
+              cl: "--map-land",
+              ct: "--foreground",
+              cmn: "--accent",
+              cmo: "--accent",
+            })) {
+              url.searchParams.set(
+                parameter,
+                colors.getPropertyValue(token).trim().replace("#", ""),
+              );
+            }
+            sources[theme] = url.href;
+          }
+          image.src = sources[theme];
+        };
+        showThemedMap();
+        document.addEventListener("themechange", showThemedMap);
       } else {
         image.src = image.dataset.previewSrc;
         image.alt = "Visitor map preview. Open live visitor statistics.";

@@ -7,10 +7,11 @@ interface ResourceLink {
 }
 
 interface Props {
-  links: ResourceLink[];
+  links?: ResourceLink[];
 }
 
-const { links } = Astro.props;
+const { links = [] } = Astro.props;
+const hasExtras = Astro.slots.has("default");
 
 function getIconName(label: string): string {
   const normalized = label.toLowerCase();
@@ -23,7 +24,7 @@ function getIconName(label: string): string {
 }
 ---
 
-{links.length > 0 && (
+{(links.length > 0 || hasExtras) && (
   <div class="item-links">
     {links.map((link) => (
       <a
@@ -36,5 +37,6 @@ function getIconName(label: string): string {
         <span>{link.label}</span>
       </a>
     ))}
+    <slot />
   </div>
 )}

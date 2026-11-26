@@ -3,7 +3,7 @@ title: "HORSE-RM: Recognition-First License Plate Recognition under Degradation 
 authors:
   - "Kien Ho Trung"
   - "Truong-Binh Duong"
-year: 2026
+date: "2026-12-18"
 venue: "International Conference on Computing and Communication Technologies (RIVF 2026)"
 image:
   src: "../../assets/publications/horse-rm.webp"

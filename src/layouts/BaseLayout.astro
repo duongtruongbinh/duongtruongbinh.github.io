@@ -1,9 +1,9 @@
 ---
 import { SITE, ANALYTICS, SOCIALS } from "../config";
-import { ClientRouter } from "astro:transitions";
 import LeftSidebar from "../components/layout/LeftSidebar.astro";
 import RightMain from "../components/layout/RightMain.astro";
 import "@fontsource-variable/inter";
+import interLatinFont from "@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url";
 import "../styles/global.css";
 
 interface Props {
@@ -32,35 +32,75 @@ const sameAs = SOCIALS.filter((social) => social.name !== "Mail").map(
   (social) => social.href,
 );
 
-const jsonLd = {
-  "@context": "https://schema.org",
+const personId = new URL("/#person", siteURL).href;
+const websiteId = new URL("/#website", siteURL).href;
+
+const person = {
   "@type": "Person",
+  "@id": personId,
   name: SITE.author,
-  url: SITE.website,
+  url: siteURL.href,
+  image: new URL(SITE.profileImage, siteURL).href,
+  description: SITE.desc,
   jobTitle: "M.Sc. Student in Telecommunications",
   affiliation: {
     "@type": "CollegeOrUniversity",
     name: "Institut national de la recherche scientifique (INRS)",
     url: "https://inrs.ca/",
   },
-  description: SITE.desc,
   alumniOf: {
     "@type": "CollegeOrUniversity",
     name: "VNUHCM - University of Science",
     url: "https://hcmus.edu.vn/",
   },
+  knowsAbout: SITE.knowsAbout,
   sameAs,
 };
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    person,
+    {
+      "@type": "WebSite",
+      "@id": websiteId,
+      url: siteURL.href,
+      name: SITE.author,
+      inLanguage: SITE.lang,
+      publisher: { "@id": personId },
+    },
+    {
+      "@type": Astro.url.pathname === "/" ? "ProfilePage" : "WebPage",
+      "@id": canonicalURL,
+      url: canonicalURL,
+      name: computedTitle,
+      description,
+      isPartOf: { "@id": websiteId },
+      ...(Astro.url.pathname === "/"
+        ? { mainEntity: { "@id": personId }, dateModified: SITE.lastUpdated }
+        : { about: { "@id": personId } }),
+    },
+  ],
+};
+// Escape "<" so the JSON can never close the surrounding <script> element.
+const jsonLdText = JSON.stringify(jsonLd).replaceAll("<", "\\u003c");
 ---
 
 <!doctype html>
-<html lang={SITE.lang} transition:animate="none">
+<html lang={SITE.lang}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <ClientRouter fallback="swap" />
+    <link
+      rel="preload"
+      href={interLatinFont}
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
     <link rel="icon" type="image/svg+xml" href={SITE.favicon} />
-    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <meta name="generator" content={Astro.generator} />
 
     <!-- Robots / Indexing -->
@@ -101,11 +141,7 @@ const jsonLd = {
     />
 
     <!-- Structured Data (JSON-LD) -->
-    <script
-      is:inline
-      type="application/ld+json"
-      set:html={JSON.stringify(jsonLd)}
-    ></script>
+    <script is:inline type="application/ld+json" set:html={jsonLdText}></script>
     {(ANALYTICS.umami.websiteId || ANALYTICS.ga4Id) && <script
       is:inline
       define:vars={{
@@ -179,15 +215,10 @@ const jsonLd = {
       const applyTheme = (theme) => {
         document.documentElement.setAttribute("data-theme", theme);
         updateToggle(theme);
+        document.dispatchEvent(new CustomEvent("themechange"));
       };
 
-      const applyPreferredTheme = () => {
-        const stored = getStoredTheme();
-        applyTheme(stored ?? (systemTheme.matches ? "dark" : "light"));
-      };
-
-      applyPreferredTheme();
-      document.addEventListener("astro:after-swap", applyPreferredTheme);
+      applyTheme(getStoredTheme() ?? (systemTheme.matches ? "dark" : "light"));
 
       systemTheme.addEventListener("change", (event) => {
         if (!getStoredTheme()) {
@@ -195,21 +226,19 @@ const jsonLd = {
         }
       });
 
-      const setupToggle = () => {
+      window.addEventListener("DOMContentLoaded", () => {
         updateToggle(document.documentElement.getAttribute("data-theme"));
-        const toggle = document.getElementById("theme-toggle");
-        if (toggle)
-          toggle.onclick = () => {
+        document
+          .getElementById("theme-toggle")
+          ?.addEventListener("click", () => {
             const current = document.documentElement.getAttribute("data-theme");
             const next = current === "dark" ? "light" : "dark";
             try {
               localStorage.setItem(themeStorageKey, next);
             } catch {}
             applyTheme(next);
-          };
-      };
-      window.addEventListener("DOMContentLoaded", setupToggle);
-      document.addEventListener("astro:page-load", setupToggle);
+          });
+      });
     </script>
   </head>
   <body class="bg-background text-foreground min-h-screen">

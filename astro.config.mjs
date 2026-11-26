@@ -3,8 +3,10 @@ import { defineConfig } from "astro/config";
 import sitemap from "@astrojs/sitemap";
 import tailwindcss from "@tailwindcss/vite";
 
+const site = "https://duongtruongbinh.github.io";
+
 export default defineConfig({
-  site: "https://duongtruongbinh.github.io",
+  site,
 
   build: {
     inlineStylesheets: "always",
@@ -14,5 +16,6 @@ export default defineConfig({
     plugins: [tailwindcss()],
   },
 
-  integrations: [sitemap()],
+  // `/cv/` only redirects to the PDF, so it is not an indexable page.
+  integrations: [sitemap({ filter: (page) => page !== `${site}/cv/` })],
 });

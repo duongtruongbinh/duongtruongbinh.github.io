@@ -1,123 +1,310 @@
-<figure class="research-loop" aria-labelledby="research-loop-caption">
-  <ol class="diagram-stages">
+---
+interface Interest {
+  stage: string;
+  title: string;
+  description: string;
+}
+
+interface Props {
+  interests: Interest[];
+}
+
+const { interests } = Astro.props;
+
+// Apple centred near (120, 79), reused in Perceive and Act.
+const applePath =
+  "M120 70C114 66 106 69 106 78C106 86 112 92 117 91C119 90.5 121 90.5 123 91C128 92 134 86 134 78C134 69 126 66 120 70Z";
+const appleStem = "M120 70C120 66 121 64 123 62";
+const appleLeaf = "M121 66C124 61 129 61 131 62C129 66 125 67 121 66Z";
+
+// Mug drawn from its bottom-left corner; table ends at `edge`.
+const mugBody = "M0-18H16V-3A3 3 0 0 1 13 0H3A3 3 0 0 1 0-3Z";
+const mugHandle = "M16-14C22-14 22-5 16-5";
+const table = (h: number, edge: number) => ({
+  top: `M0 ${h - 26}H${edge}V${h - 20}H0Z`,
+  front: `M0 ${h - 20}H${edge}V${h - 13}H0Z`,
+  leg: `M${edge - 10} ${h - 13}H${edge - 4}V${h}H${edge - 10}Z`,
+  line: `M0 ${h - 26}H${edge}`,
+});
+const nowTable = table(92, 62);
+const futureTable = table(70, 64);
+---
+
+<ol class="diagram-stages">
+  {interests.map((interest, index) => (
     <li class="diagram-stage">
-      <svg viewBox="0 0 216 176" fill="none" aria-hidden="true">
-        <g
-          stroke="currentColor"
-          stroke-width="1.5"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        >
-          <rect
-            class="diagram-detail"
-            x="24"
-            y="24"
-            width="144"
-            height="108"
-            rx="4"
-          />
-          <rect
-            class="diagram-frame"
-            x="36"
-            y="36"
-            width="144"
-            height="108"
-            rx="4"
-          />
-          <path
-            class="diagram-guide"
-            d="M36 72H180M36 108H180M84 36V144M132 36V144"
-          />
-          <path class="diagram-detail" d="M49 120L108 88L167 120M108 88V57" />
-          <path
-            class="diagram-surface"
-            d="M88 87L108 76L128 87L108 99ZM88 87V110L108 122L128 110V87M108 99V122"
-          />
-          <path d="M75 75V65H85M131 65H141V75M141 119V129H131M85 129H75V119" />
-          <circle cx="49" cy="49" r="2" fill="currentColor" stroke="none" />
-          <path class="diagram-detail" d="M57 49H75" />
-        </g>
-      </svg>
+      <div class="diagram-figure">
+        {index === 0 && (
+          <svg viewBox="0 0 240 160" aria-hidden="true">
+            <defs>
+              <clipPath id="ri-perceive-clip">
+                <rect x="14" y="8" width="212" height="102" rx="8" />
+              </clipPath>
+            </defs>
+            <rect
+              class="ri-paper"
+              x="14"
+              y="8"
+              width="212"
+              height="102"
+              rx="8"
+            />
+            <g clip-path="url(#ri-perceive-clip)">
+              <rect class="ri-wood" x="14" y="72" width="212" height="38" />
+              <path class="ri-wood-line" d="M14 72H226" />
+              <ellipse class="ri-shadow" cx="61" cy="89" rx="16" ry="3.5" />
+              <ellipse class="ri-shadow" cx="120" cy="91" rx="13" ry="3" />
+              <ellipse class="ri-shadow" cx="181" cy="89" rx="26" ry="3" />
+              <path
+                class="ri-mug"
+                d="M48 62H74V84A4 4 0 0 1 70 88H52A4 4 0 0 1 48 84Z"
+              />
+              <path class="ri-mug-handle" d="M74 67C82 67 82 81 74 81" />
+              <ellipse class="ri-mug-rim" cx="61" cy="62" rx="13" ry="3" />
+              <path class="ri-shine" d="M53 67V82" />
+              <path class="ri-apple" d={applePath} />
+              <path class="ri-stem" d={appleStem} />
+              <path class="ri-leaf" d={appleLeaf} />
+              <ellipse class="ri-shine-fill" cx="113" cy="76" rx="2.5" ry="4" />
+              <rect
+                class="ri-book-a"
+                x="158"
+                y="78"
+                width="46"
+                height="10"
+                rx="1.5"
+              />
+              <rect
+                class="ri-book-b"
+                x="162"
+                y="68"
+                width="38"
+                height="10"
+                rx="1.5"
+              />
+            </g>
+            <rect class="ri-box" x="42" y="55" width="44" height="38" rx="3" />
+            <rect
+              class="ri-tag"
+              x="42"
+              y="45.5"
+              width="24"
+              height="10"
+              rx="2"
+            />
+            <text class="ri-tag-text" x="54" y="53" text-anchor="middle">
+              mug
+            </text>
+            <rect class="ri-box" x="101" y="57" width="38" height="37" rx="3" />
+            <rect
+              class="ri-tag"
+              x="101"
+              y="47.5"
+              width="28"
+              height="10"
+              rx="2"
+            />
+            <text class="ri-tag-text" x="115" y="55" text-anchor="middle">
+              apple
+            </text>
+            <rect
+              class="ri-bubble"
+              x="14"
+              y="118"
+              width="212"
+              height="36"
+              rx="8"
+            />
+            <path class="ri-bubble-tail" d="M28 119L34 111L40 119" />
+            <circle class="ri-badge-muted" cx="27" cy="128.5" r="6" />
+            <text class="ri-badge-text" x="27" y="131.3" text-anchor="middle">
+              Q
+            </text>
+            <text class="ri-label-strong" x="38" y="131.5">
+              What is left of the apple?
+            </text>
+            <circle class="ri-badge" cx="27" cy="144" r="6" />
+            <text class="ri-badge-text" x="27" y="146.8" text-anchor="middle">
+              A
+            </text>
+            <text class="ri-answer" x="38" y="147">
+              A blue mug.
+            </text>
+          </svg>
+        )}
+        {index === 1 && (
+          <svg viewBox="0 0 240 160" aria-hidden="true">
+            <defs>
+              <clipPath id="ri-wm-now">
+                <rect width="92" height="92" rx="7" />
+              </clipPath>
+              <clipPath id="ri-wm-future">
+                <rect width="98" height="70" rx="7" />
+              </clipPath>
+            </defs>
+            <path class="ri-branch" d="M98 80H108" />
+            <path class="ri-branch" d="M122 74C128 58 127 41 136 41" />
+            <path class="ri-branch" d="M122 86C128 102 127 119 136 119" />
+            <circle class="ri-tag" cx="116" cy="80" r="8.5" />
+            <path
+              class="ri-sparkle-inverse"
+              transform="translate(116 80)"
+              d="M0-5C.6-1.4 1.4-.6 5 0C1.4.6.6 1.4 0 5C-.6 1.4-1.4.6-5 0C-1.4-.6-.6-1.4 0-5Z"
+            />
+            <g transform="translate(6 34)">
+              <rect class="ri-paper-plain" width="92" height="92" rx="7" />
+              <g clip-path="url(#ri-wm-now)">
+                <path class="ri-wood" d={nowTable.top} />
+                <path class="ri-wood-front" d={nowTable.front} />
+                <path class="ri-wood-front" d={nowTable.leg} />
+                <path class="ri-wood-line" d={nowTable.line} />
+              </g>
+              <ellipse class="ri-shadow" cx="49" cy="69.5" rx="11" ry="2" />
+              <g transform="translate(41 69)">
+                <path class="ri-mug" d={mugBody} />
+                <path class="ri-mug-handle" d={mugHandle} stroke-width="2.5" />
+                <ellipse class="ri-mug-rim" cx="8" cy="-18" rx="8" ry="2.2" />
+              </g>
+              <rect class="ri-frame" width="92" height="92" rx="7" />
+              <rect
+                class="ri-badge-muted"
+                x="6"
+                y="6"
+                width="26"
+                height="13"
+                rx="6.5"
+              />
+              <text class="ri-tag-text" x="19" y="15" text-anchor="middle">
+                now
+              </text>
+            </g>
+            <g transform="translate(136 6)">
+              <rect class="ri-imagined" width="98" height="70" rx="7" />
+              <g clip-path="url(#ri-wm-future)">
+                <path class="ri-wood" d={futureTable.top} />
+                <path class="ri-wood-front" d={futureTable.front} />
+                <path class="ri-wood-front" d={futureTable.leg} />
+                <path class="ri-wood-line" d={futureTable.line} />
+                <path class="ri-track" d="M52 24C62 20 70 26 73 35" />
+                <g transform="translate(66 56) rotate(35)">
+                  <path class="ri-mug" d={mugBody} />
+                  <path
+                    class="ri-mug-handle"
+                    d={mugHandle}
+                    stroke-width="2.5"
+                  />
+                  <ellipse class="ri-mug-rim" cx="8" cy="-18" rx="8" ry="2.2" />
+                </g>
+              </g>
+              <rect class="ri-frame-predicted" width="98" height="70" rx="7" />
+              <rect class="ri-chip" x="6" y="6" width="44" height="14" rx="7" />
+              <text class="ri-chip-text" x="28" y="16" text-anchor="middle">
+                push →
+              </text>
+              <circle class="ri-bad" cx="85" cy="13" r="7" />
+              <path
+                class="ri-mark"
+                d="M82.5 10.5L87.5 15.5M87.5 10.5L82.5 15.5"
+              />
+            </g>
+            <g transform="translate(136 84)">
+              <rect class="ri-imagined" width="98" height="70" rx="7" />
+              <g clip-path="url(#ri-wm-future)">
+                <path class="ri-wood" d={futureTable.top} />
+                <path class="ri-wood-front" d={futureTable.front} />
+                <path class="ri-wood-front" d={futureTable.leg} />
+                <path class="ri-wood-line" d={futureTable.line} />
+              </g>
+              <ellipse class="ri-shadow" cx="25" cy="47.5" rx="11" ry="2" />
+              <g transform="translate(17 47)">
+                <path class="ri-mug" d={mugBody} />
+                <path class="ri-mug-handle" d={mugHandle} stroke-width="2.5" />
+                <ellipse class="ri-mug-rim" cx="8" cy="-18" rx="8" ry="2.2" />
+              </g>
+              <rect class="ri-frame-predicted" width="98" height="70" rx="7" />
+              <rect class="ri-chip" x="6" y="6" width="44" height="14" rx="7" />
+              <text class="ri-chip-text" x="28" y="16" text-anchor="middle">
+                push ←
+              </text>
+              <circle class="ri-good" cx="85" cy="13" r="7" />
+              <path class="ri-mark" d="M82 13.2L84.2 15.6L88 10.6" />
+            </g>
+          </svg>
+        )}
+        {index === 2 && (
+          <svg viewBox="0 0 240 160" aria-hidden="true">
+            <path
+              class="ri-wood"
+              d="M6 128A2 2 0 0 1 8 126H232A2 2 0 0 1 234 128V137H6Z"
+            />
+            <path
+              class="ri-wood-front"
+              d="M6 136H234V143A3 3 0 0 1 231 146H9A3 3 0 0 1 6 143Z"
+            />
+            <ellipse class="ri-shadow" cx="168" cy="131" rx="23" ry="2.5" />
+            <path
+              class="ri-bowl"
+              d="M144 116C145 127 155 131 168 131C181 131 191 127 192 116Z"
+            />
+            <ellipse class="ri-bowl-rim" cx="168" cy="116" rx="24" ry="5" />
+            <circle class="ri-ghost-outline" cx="108" cy="123" r="8" />
+            <path class="ri-track ri-flow" d="M108 114C110 92 136 82 155 88" />
+            <path class="ri-arrowhead" d="M148.4 89.6L155 88L150.4 83" />
+            <path
+              class="ri-metal"
+              d="M22 131V123A5 5 0 0 1 27 118H61A5 5 0 0 1 66 123V131Z"
+            />
+            <rect
+              class="ri-metal"
+              x="35"
+              y="94"
+              width="18"
+              height="26"
+              rx="5"
+            />
+            <path
+              class="ri-link-outer"
+              d="M44 92L94 46L168 60"
+              stroke-width="15"
+            />
+            <path
+              class="ri-link-inner"
+              d="M44 92L94 46L168 60"
+              stroke-width="12"
+            />
+            <circle class="ri-metal" cx="44" cy="92" r="10" />
+            <circle class="ri-joint-dot" cx="44" cy="92" r="3.5" />
+            <circle class="ri-metal" cx="94" cy="46" r="9" />
+            <circle class="ri-joint-dot" cx="94" cy="46" r="3" />
+            <path class="ri-gripper" d="M168 66V80" stroke-width="6" />
+            <path class="ri-gripper" d="M156 82H180" stroke-width="5" />
+            <path
+              class="ri-gripper"
+              d="M157 82V100M179 82V100"
+              stroke-width="3.5"
+            />
+            <g transform="translate(168 93) scale(0.62) translate(-120 -79)">
+              <path class="ri-apple" d={applePath} />
+              <path class="ri-stem" d={appleStem} stroke-width="2.5" />
+              <path class="ri-leaf" d={appleLeaf} />
+            </g>
+            <circle class="ri-metal" cx="168" cy="60" r="7" />
+            <circle class="ri-joint-dot" cx="168" cy="60" r="2.5" />
+            <path
+              class="ri-bubble"
+              d="M98 4H227A8 8 0 0 1 235 12V23A8 8 0 0 1 227 31H124L109 39L113 31H98A8 8 0 0 1 90 23V12A8 8 0 0 1 98 4Z"
+            />
+            <text class="ri-instruction" x="162.5" y="21" text-anchor="middle">
+              “Put the apple in the bowl”
+            </text>
+          </svg>
+        )}
+      </div>
       <div class="diagram-stage-copy">
-        <span class="diagram-stage-title">Perception</span>
-        <p>Visual observations of the environment.</p>
+        <p class="diagram-stage-step">{interest.stage}</p>
+        <h3 class="diagram-stage-title">{interest.title}</h3>
+        <p class="diagram-stage-description">{interest.description}</p>
       </div>
     </li>
-    <li class="diagram-stage">
-      <svg viewBox="0 0 216 176" fill="none" aria-hidden="true">
-        <g
-          stroke="currentColor"
-          stroke-width="1.5"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        >
-          <path
-            class="diagram-frame"
-            d="M24 106V72L108 24L192 72V106L108 154Z"
-          />
-          <path class="diagram-surface" d="M24 106L108 58L192 106L108 154Z" />
-          <path
-            class="diagram-guide"
-            d="M108 24V58M52 90L136 138M80 74L164 122M52 122L136 74M80 138L164 90"
-          />
-          <path class="diagram-detail" d="M24 106L108 58L192 106" />
-          <path
-            class="diagram-surface"
-            d="M60 84V110C60 120 88 120 88 110V84"
-          />
-          <ellipse class="diagram-surface" cx="74" cy="84" rx="14" ry="7" />
-          <path class="diagram-detail" d="M60 99C60 109 88 109 88 99" />
-          <path class="diagram-forecast" d="M126 112C142 112 152 102 158 92" />
-          <circle class="diagram-forecast" cx="158" cy="92" r="8" />
-          <circle class="diagram-node" cx="126" cy="112" r="9" />
-          <path class="diagram-guide" d="M122 108L125 106" />
-        </g>
-      </svg>
-      <div class="diagram-stage-copy">
-        <span class="diagram-stage-title">World Model</span>
-        <p>Model physical scenes and their dynamics.</p>
-      </div>
-    </li>
-    <li class="diagram-stage">
-      <svg viewBox="0 0 216 176" fill="none" aria-hidden="true">
-        <g
-          stroke="currentColor"
-          stroke-width="1.5"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        >
-          <path
-            class="diagram-detail"
-            d="M25 28V148H195M21 33L25 28L29 33M190 144L195 148L190 152"
-          />
-          <path
-            class="diagram-guide"
-            d="M65 36V148M108 36V148M151 36V148M25 68H187M25 108H187"
-          />
-          <path
-            class="diagram-forecast"
-            d="M47 120C81 118 105 101 127 78S158 41 185 38M47 120C91 131 121 113 145 94S174 66 192 64"
-          />
-          <path d="M47 120C84 125 111 107 135 84S163 54 185 51M177 47L185 51L180 59" />
-          <path
-            class="diagram-surface"
-            d="M36 105L47 99L58 105V118L47 125L36 118ZM36 105L47 112L58 105M47 112V125"
-          />
-          <path
-            class="diagram-forecast"
-            d="M99 91L110 85L121 91V104L110 111L99 104ZM99 91L110 98L121 91M110 98V111M155 42L166 36L177 42V55L166 62L155 55ZM155 42L166 49L177 42M166 49V62"
-          />
-          <circle cx="47" cy="148" r="2" fill="currentColor" stroke="none" />
-          <path class="diagram-detail" d="M110 145V151M166 145V151" />
-        </g>
-      </svg>
-      <div class="diagram-stage-copy">
-        <span class="diagram-stage-title">Prediction & action</span>
-        <p>Anticipate future states. Plan what comes next.</p>
-      </div>
-    </li>
-  </ol>
-  <figcaption id="research-loop-caption">
-    A research perspective: observe the world, model its dynamics, and act.
-  </figcaption>
-</figure>
+  ))}
+</ol>

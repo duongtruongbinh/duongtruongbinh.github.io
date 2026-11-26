@@ -9,11 +9,7 @@ const email = SOCIALS.find((social) => social.name === "Mail");
 const academicLinks = SOCIALS.filter((social) => social.name !== "Mail");
 ---
 
-<aside
-  class="sidebar"
-  aria-label="Profile"
-  transition:persist="profile-sidebar"
->
+<aside class="sidebar" aria-label="Profile">
   <div class="profile">
     {bio?.avatar && (
       <img

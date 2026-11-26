@@ -15,11 +15,16 @@ test("profile contact is readable and the retained research content is rendered"
     }
   }
   const home = await readFile("dist/index.html", "utf8");
-  assert.match(home, /<figure[^>]*aria-labelledby="research-loop-caption"/);
   assert.equal([...home.matchAll(/class="diagram-stage"/g)].length, 3);
-  assert.match(home, /<h3>World Models<\/h3>/);
-  assert.match(home, /<h3>Vision-Language-Action<\/h3>/);
-  assert.match(home, /<h3>Robust Multimodal Reasoning<\/h3>/);
+  const interests = [
+    ...home.matchAll(/<h3 class="diagram-stage-title">([^<]+)<\/h3>/g),
+  ].map((match) => match[1]);
+  assert.deepEqual(interests, [
+    "Robust Multimodal Reasoning",
+    "World Models",
+    "Vision-Language-Action",
+  ]);
+  assert.match(home, /<h2 id="research-interests-heading"/);
   assert.doesNotMatch(home, /\[object Object\]/);
 });
 
@@ -28,7 +33,10 @@ test("readers can skip navigation and see the editorial update date", async () =
     const html = await readFile(`dist/${page}`, "utf8");
     assert.match(html, /href="#main-content"/);
     assert.match(html, /<main\b[^>]*id="main-content"/);
-    assert.match(html, /Last updated:[\s\S]*?<time datetime="2026-11-08"/);
+    assert.match(
+      html,
+      /Last updated:[\s\S]*?<time datetime="\d{4}-\d{2}-\d{2}"/,
+    );
   }
 });
 
@@ -151,7 +159,11 @@ test("previews use a snapshot without contacting the live counter", async () => 
     const context = {
       URL,
       window: { location: { hostname } },
-      document: { querySelector: () => map, documentElement: {} },
+      document: {
+        querySelector: () => map,
+        documentElement: { getAttribute: () => "light" },
+        addEventListener() {},
+      },
       getComputedStyle: () => ({ getPropertyValue: () => " #1e40af " }),
     };
     runInNewContext(script, context);
@@ -174,4 +186,90 @@ test("previews use a snapshot without contacting the live counter", async () => 
     runInNewContext(script, { ...context });
     assert.equal(map.hidden, true, "other pages must not display the map");
   }
+});
+
+test("publications put first-author papers first within each year", async () => {
+  const html = await readFile("dist/publications/index.html", "utf8");
+  const groups = [
+    ...html.matchAll(
+      /<h2 id="year-(\d{4})"[\s\S]*?(?=<h2 id="year-|<\/main>)/g,
+    ),
+  ];
+  assert.deepEqual(
+    groups.map((group) => group[1]),
+    ["2026", "2025"],
+  );
+  for (const [group] of groups) {
+    const leads = [
+      ...group.matchAll(/<p class="publication-authors">\s*(<strong>)?/g),
+    ].map((match) => Boolean(match[1]));
+    assert.ok(leads[0], "a first-author paper leads each year");
+    assert.deepEqual(
+      leads,
+      [...leads].sort((a, b) => Number(b) - Number(a)),
+    );
+  }
+});
+
+test("BibTeX is available and prefers DOI records", async () => {
+  const html = await readFile("dist/publications/index.html", "utf8");
+  const panels = [
+    ...html.matchAll(/<div class="bibtex-panel" id="([^"]+)" hidden>/g),
+  ];
+  assert.ok(panels.length >= 5);
+  for (const [, id] of panels) {
+    assert.match(html, new RegExp(`aria-controls="${id}"`));
+  }
+  for (const doi of [
+    "10.1016/j.procs.2026.09.191",
+    "10.1109/MAPR72750.2026.11685754",
+    "10.1007/978-981-95-1746-6_18",
+  ]) {
+    assert.ok(html.includes(`doi       = {${doi}}`), doi);
+  }
+});
+
+test("404 is not indexed and links back into the site", async () => {
+  const html = await readFile("dist/404.html", "utf8");
+  assert.match(html, /<meta name="robots" content="noindex, nofollow"/);
+  assert.match(html, /<a href="\/">Back to home<\/a>/);
+  assert.doesNotMatch(html, /history\.back/);
+});
+
+test("sitemap lists only indexable pages", async () => {
+  const sitemap = await readFile("dist/sitemap-0.xml", "utf8");
+  assert.doesNotMatch(sitemap, /\/cv\//);
+  assert.match(sitemap, /\/publications\//);
+});
+
+test("icons and preview image are published", async () => {
+  const html = await readFile("dist/index.html", "utf8");
+  for (const file of ["favicon.svg", "favicon.ico", "apple-touch-icon.png"]) {
+    assert.ok((await readFile(`dist/${file}`)).length > 0, file);
+    assert.ok(html.includes(`href="/${file}"`), file);
+  }
+  assert.match(html, /<link rel="preload"[^>]*as="font"/);
+  await assert.rejects(readFile("dist/profile.jpg"));
+});
+
+test("structured data describes the person and marks the homepage as a profile", async () => {
+  for (const page of pages) {
+    const html = await readFile(`dist/${page}`, "utf8");
+    const json = html.match(
+      /<script type="application\/ld\+json">([\s\S]*?)<\/script>/,
+    );
+    assert.ok(json, `${page} must include JSON-LD`);
+    const graph = JSON.parse(json[1])["@graph"];
+    const person = graph.find((node) => node["@type"] === "Person");
+    assert.equal(person.name, "Truong-Binh Duong");
+    assert.match(person.image, /^https:\/\/duongtruongbinh\.github\.io\/.+/);
+    assert.ok(person.knowsAbout.includes("World Models"));
+    assert.ok(person.sameAs.some((url) => url.includes("orcid.org")));
+    const pageNode = graph.find((node) => node["@type"].endsWith("Page"));
+    assert.equal(
+      pageNode["@type"],
+      page === "index.html" ? "ProfilePage" : "WebPage",
+    );
+  }
+  assert.ok((await readFile("dist/profile-portrait.webp")).length > 0);
 });

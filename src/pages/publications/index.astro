@@ -2,12 +2,22 @@
 import { getCollection } from "astro:content";
 import PublicationItem from "../../components/publications/PublicationItem.astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import { isSiteAuthor, publicationYear } from "../../utils/publications";
+
+const isFirstAuthor = (authors: string[]) =>
+  authors.length > 0 && isSiteAuthor(authors[0]);
 
 const publications = (await getCollection("publications")).sort(
   (a, b) =>
-    b.data.year - a.data.year || a.data.title.localeCompare(b.data.title),
+    publicationYear(b.data.date) - publicationYear(a.data.date) ||
+    Number(isFirstAuthor(b.data.authors)) -
+      Number(isFirstAuthor(a.data.authors)) ||
+    b.data.date.localeCompare(a.data.date) ||
+    a.data.title.localeCompare(b.data.title),
 );
-const years = [...new Set(publications.map(({ data }) => data.year))];
+const years = [
+  ...new Set(publications.map(({ data }) => publicationYear(data.date))),
+];
 ---
 
 <BaseLayout
@@ -36,9 +46,9 @@ const years = [...new Set(publications.map(({ data }) => data.year))];
           </h2>
           <div class="publication-list">
             {publications
-              .filter(({ data }) => data.year === year)
-              .map(({ data }) => (
-                <PublicationItem publication={data} />
+              .filter(({ data }) => publicationYear(data.date) === year)
+              .map(({ id, data }) => (
+                <PublicationItem id={id} publication={data} />
               ))}
           </div>
         </section>
